@@ -1,0 +1,48 @@
+BODY		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px}
+P			{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px}
+FONT		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px}
+TD			{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px}
+DIV			{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px}
+FORM 		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px}
+INPUT		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px}
+SELECT		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px}
+TEXTAREA	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px}
+A:link		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #000000; TEXT-DECORATION: underline}
+A:active	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #000000; TEXT-DECORATION: underline}
+A:visited	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #000000; TEXT-DECORATION: underline}
+A:hover		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #000000; TEXT-DECORATION: none}
+
+A.ulnk_dark:link	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #000000; TEXT-DECORATION: underline}
+A.ulnk_dark:active	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #000000; TEXT-DECORATION: underline}
+A.ulnk_dark:visited	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #000000; TEXT-DECORATION: underline}
+A.ulnk_dark:hover	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #000000; TEXT-DECORATION: none}
+A.ulnk_light:link	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #FFFFFF; TEXT-DECORATION: underline}
+A.ulnk_light:active	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #FFFFFF; TEXT-DECORATION: underline}
+A.ulnk_light:visited{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #FFFFFF; TEXT-DECORATION: underline}
+A.ulnk_light:hover	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #FFFFFF; TEXT-DECORATION: none}
+A.lnk_light:link	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #FFFFFF; TEXT-DECORATION: none}
+A.lnk_light:active	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #FFFFFF; TEXT-DECORATION: none}
+A.lnk_light:visited	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #FFFFFF; TEXT-DECORATION: none}
+A.lnk_light:hover	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #FFFFFF; TEXT-DECORATION: underline}
+
+.title_page			{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 16px; BACKGROUND: url(back-ptitle.jpg) #83A0BB; COLOR: #000000; FONT-WEIGHT: bold; TEXT-DECORATION: none; width: 460px; height: 48px}
+.title_contents		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 16px; BACKGROUND: url(back-title-contents.jpg) #83A0BB; COLOR: #FFFFFF; FONT-WEIGHT: bold; TEXT-DECORATION: none; width: 460px; height: 48px}
+.title_chapter		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 16px; BACKGROUND: url(back-title.jpg) #83A0BB; COLOR: #FFFFFF; FONT-WEIGHT: bold; TEXT-DECORATION: none; width: 460px; height: 48px}
+.title_chapter_cfg	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 16px; BACKGROUND: url(back-title-cfg.jpg) #83A0BB; COLOR: #FFFFFF; FONT-WEIGHT: bold; TEXT-DECORATION: none; width: 460px; height: 48px}
+.title_chapter_inf	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 16px; BACKGROUND: url(back-title-inf.jpg) #83A0BB; COLOR: #FFFFFF; FONT-WEIGHT: bold; TEXT-DECORATION: none; width: 460px; height: 48px}
+.title_chapter_key	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 16px; BACKGROUND: url(back-title-key.jpg) #83A0BB; COLOR: #FFFFFF; FONT-WEIGHT: bold; TEXT-DECORATION: none; width: 460px; height: 48px}
+.title_chapter_war	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 16px; BACKGROUND: url(back-title-war.jpg) #83A0BB; COLOR: #FFFFFF; FONT-WEIGHT: bold; TEXT-DECORATION: none; width: 460px; height: 48px}
+.title_big_dark		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 16px; BACKGROUND: none; COLOR: #000000; FONT-WEIGHT: bold; TEXT-DECORATION: none}
+.title_big_light	{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 16px; BACKGROUND: none; COLOR: #FFFFFF; FONT-WEIGHT: bold; TEXT-DECORATION: none}
+.title_dark 		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 14px; BACKGROUND: none; COLOR: #000000; FONT-WEIGHT: bold; TEXT-DECORATION: none}
+.title_light		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 14px; BACKGROUND: none; COLOR: #FFFFFF; FONT-WEIGHT: bold; TEXT-DECORATION: none}
+
+.alert				{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 14px; BACKGROUND: none; COLOR: #990000; FONT-WEIGHT: bold; TEXT-DECORATION: none}
+.text_big_dark		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; BACKGROUND: none; COLOR: #000000; FONT-WEIGHT: normal; TEXT-DECORATION: none}
+.text_big_light		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 12px; BACKGROUND: none; COLOR: #FFFFFF; FONT-WEIGHT: normal; TEXT-DECORATION: none}
+.text_dark			{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #000000; FONT-WEIGHT: normal; TEXT-DECORATION: none}
+.text_light			{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 11px; BACKGROUND: none; COLOR: #FFFFFF; FONT-WEIGHT: normal; TEXT-DECORATION: none}
+.tiny_big_dark		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 9px;  BACKGROUND: none; COLOR: #000000; FONT-WEIGHT: normal; TEXT-DECORATION: none}
+.tiny_big_light		{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 9px;  BACKGROUND: none; COLOR: #FFFFFF; FONT-WEIGHT: normal; TEXT-DECORATION: none}
+.tiny_dark			{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 8px;  BACKGROUND: none; COLOR: #000000; FONT-WEIGHT: normal; TEXT-DECORATION: none}
+.tiny_light			{FONT-FAMILY: Verdana,Helvetica; FONT-SIZE: 8px;  BACKGROUND: none; COLOR: #FFFFFF; FONT-WEIGHT: normal; TEXT-DECORATION: none}
