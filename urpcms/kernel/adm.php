@@ -71,65 +71,65 @@ class ur_adm {
 		$page->html_table_start(true);
 
 		// Menu table
-		echo "<table align=\"center\"><tr>";
+		echo "<table align=\"center\"><tr>\n";
 		
 		// ADD-ONS
 		if ($user->have_nativ_right("addons")) {
   		$cmp++;
-  		echo "<td align=\"center\">";
+  		echo "<td align=\"center\">\n";
   		$page->icon("kernel/pics/adm/add-ons.gif", TXT_ADDONS, "index.php?cmd=admin&amp;menu=addons", "80");
-  		echo "</td>";
+  		echo "</td>\n";
     }
 		// ASPECT
 		if ($user->have_nativ_right("aspect")) {		
    		$cmp++;
-  		echo "<td align=\"center\">";
+  		echo "<td align=\"center\">\n";
   		$page->icon("kernel/pics/adm/aspect.gif", TXT_ASPECT, "index.php?cmd=admin&amp;menu=aspect", "80");
-  		echo "</td>";
+  		echo "</td>\n";
     }  		
 		// COLORS
 		if ($user->have_nativ_right("colors")) {		
   		$cmp++;
-  		echo "<td align=\"center\">";
+  		echo "<td align=\"center\">\n";
   		$page->icon("kernel/pics/adm/colors.gif", TXT_COLORS, "index.php?cmd=admin&amp;menu=colors", "80");
-  		echo "</td>";
+  		echo "</td>\n";
     }  		
 		// GROUPS
 		if ($user->have_nativ_right("groups")) {
   		$cmp++;		
-  		echo "<td align=\"center\">";
+  		echo "<td align=\"center\">\n";
   		$page->icon("kernel/pics/adm/groups.gif", TXT_GROUPS, "index.php?cmd=admin&amp;menu=groups", "80");
-  		echo "</td>";
+  		echo "</td>\n";
     }  		
 		// INDEX ICON
 		if ($user->have_nativ_right("index")) {
   		$cmp++;		
-  		echo "<td align=\"center\">";
+  		echo "<td align=\"center\">\n";
   		$page->icon("kernel/pics/adm/index.gif", TXT_INDEX, "index.php?cmd=admin&amp;menu=index", "80");
-  		echo "</td>";
+  		echo "</td>\n";
     }  		
 		// PANELS
 		if ($user->have_nativ_right("panels")) {
   		$cmp++;		
-  		echo "<td align=\"center\">";
+  		echo "<td align=\"center\">\n";
   		$page->icon("kernel/pics/adm/aspect.gif", TXT_PANELS, "index.php?cmd=admin&amp;menu=panels", "80");
-  		echo "</td>";
+  		echo "</td>\n";
     }  		
 		// SECURITY
 		if ($user->have_nativ_right("security")) {
   		$cmp++;
-			if ($cmp == 7) {$cmp = 0;	echo "</tr><tr>";}  		
-  		echo "<td align=\"center\">";
+			if ($cmp == 7) {$cmp = 0;	echo "</tr><tr>\n";}  		
+  		echo "<td align=\"center\">\n";
   		$page->icon("kernel/pics/adm/security.gif", TXT_SECURITY, "index.php?cmd=admin&amp;menu=security", "80");
-  		echo "</td>";  		
+  		echo "</td>\n";  		
     }  		
 		// USERS
 		if ($user->have_nativ_right("users")) {
   		$cmp++;
-			if ($cmp == 7) {$cmp = 0;	echo "</tr><tr>";}      	
-  		echo "<td align=\"center\">";
+			if ($cmp == 7) {$cmp = 0;	echo "</tr><tr>\n";}      	
+  		echo "<td align=\"center\">\n";
   		$page->icon("kernel/pics/adm/users.gif", TXT_USERS, "index.php?cmd=admin&amp;menu=users", "80");
-  		echo "</td>"; 		
+  		echo "</td>\n"; 		
     }  		
 		// ADD-ONS ICONS
 		$cmpt = count($addon_list_name);
@@ -139,10 +139,10 @@ class ur_adm {
 			if ($addon_right > 2) {
 				if (@file_exists("add-ons/".$addon_name."/adm/lnk.php")) {
 					$cmp = $cmp + 1;
-					if ($cmp == 7) {$cmp = 0;	echo "</tr><tr>";}
-					echo "<td align=\"center\">";
+					if ($cmp == 7) {$cmp = 0;	echo "</tr><tr>\n";}
+					echo "<td align=\"center\">\n";
 					include("add-ons/".$addon_name."/adm/lnk.php");
-					echo "</td>";
+					echo "</td>\n";
 				}
 			}
 		}
@@ -150,13 +150,13 @@ class ur_adm {
 		$cmp = $cmp + 1;
 		if ($cmp == 7) {
 			$cmp = 0;
-			echo "</tr><tr>";
+			echo "</tr><tr>\n";
 		}
-		echo "<td align=\"center\">";
+		echo "<td align=\"center\">\n";
 		$page->icon("kernel/pics/adm/logout.gif", TXT_LOGOUT, "index.php?cmd=logout", "60");
-		echo "</td>";
+		echo "</td>\n";
 
-		echo "</tr></table>";
+		echo "</tr></table>\n";
 
 		$page->html_table_end();
 	}
@@ -418,8 +418,8 @@ class ur_adm {
 		global $db, $db_prefix, $acc_prefix, $page;
 		global $tab_title_bgcolor, $tab_title_bgcolor2, $tab_bgcolor;
 
-		$trow2 = "<tr><td bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">&nbsp;</td></tr>";
-		$trow4 = "<tr><td bgcolor=\"".$tab_bgcolor."\" colspan=\"4\">&nbsp;</td></tr>";
+		$trow2 = "<tr><td bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">&nbsp;</td></tr>\n";
+		$trow4 = "<tr><td bgcolor=\"".$tab_bgcolor."\" colspan=\"4\">&nbsp;</td></tr>\n";
 		
 		$page->html_header(ADM_TITLE_ADMIN);
 		$page->title_page(ADM_TITLE_ADMIN, 2);
@@ -442,24 +442,24 @@ class ur_adm {
 					elseif($ex3>0) {$ck_view = " checked";}
 					else {$ck_noth = " checked";}
 					$main_title = ADM_TITLE_ADDONRIGHT." : ".$addon_name;					
-					$html_form = $trow2."<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ADDONS_NAME."</font></td>"
-					."<td bgcolor=\"".$tab_bgcolor."\"><b>".$addon_name."</b></td></tr>".$trow2
-					."<tr><td colspan=\"2\" bgcolor=\"".$tab_bgcolor."\">\n<table>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_GROUPS."&nbsp;&nbsp;</b></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>(".TXT_NONE.")</b></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_VIEW."</b></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_USE."</b></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_ADMIN."</b></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"></td></tr>"
-					."<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
-					."<input type=\"hidden\" name=\"menu\" value=\"".$name."\"><input type=\"hidden\" name=\"act\" value=\"modify\">"
-					."<input type=\"hidden\" name=\"id\" value=\"".$id."\"><input type=\"hidden\" name=\"grp_name\" value=\"all\">"
-					."<tr><td bgcolor=\"".$tab_title_bgcolor2."\"><b>ALL</b></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"0\"".$ck_noth."></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"1\"".$ck_view."></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"2\"".$ck_use."></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"submit\" value=\"".TXT_SAVE."\"></td></tr></form>";
+					$html_form = $trow2."<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">\n".ADM_ADDONS_NAME."</font></td>\n"
+					."<td bgcolor=\"".$tab_bgcolor."\"><b>\n".$addon_name."</b></td></tr>\n".$trow2
+					."<tr><td colspan=\"2\" bgcolor=\"".$tab_bgcolor."\">\n<table>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>\n".TXT_GROUPS."&nbsp;&nbsp;</b></td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>(".TXT_NONE.")</b></td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>\n".TXT_VIEW."</b></td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>\n".TXT_USE."</b></td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>\n".TXT_ADMIN."</b></td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"></td></tr>\n"
+					."<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">\n"
+					."<input type=\"hidden\" name=\"menu\" value=\"".$name."\"><input type=\"hidden\" name=\"act\" value=\"modify\">\n"
+					."<input type=\"hidden\" name=\"id\" value=\"".$id."\"><input type=\"hidden\" name=\"grp_name\" value=\"all\">\n"
+					."<tr><td bgcolor=\"".$tab_title_bgcolor2."\"><b>ALL</b></td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"0\"".$ck_noth."></td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"1\"".$ck_view."></td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"2\"".$ck_use."></td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"></td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"submit\" value=\"".TXT_SAVE."\"></td></tr></form>\n";
 					
 					// GET GROUPS LIST
 					$bgc = $tab_bgcolor;
@@ -474,20 +474,20 @@ class ur_adm {
 						elseif($ex2>0) {$ck_use = " checked";}
 						elseif($ex3>0) {$ck_view = " checked";}
 						else {$ck_noth = " checked";}
-						$html_form = $html_form."<form action=\"index.php?\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
-						."<input type=\"hidden\" name=\"menu\" value=\"".$name."\"><input type=\"hidden\" name=\"act\" value=\"modify\">"
-						."<input type=\"hidden\" name=\"id\" value=\"".$id."\"><input type=\"hidden\" name=\"grp_name\" value=\"".$group_name."\">"
-						."<tr><td bgcolor=\"".$bgc."\">".$group_name."</td>"
-						."<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"0\"".$ck_noth."></td>"
-						."<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"1\"".$ck_view."></td>"
-						."<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"2\"".$ck_use."></td>"
-						."<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"3\"".$ck_admin."></td>"
-						."<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"submit\" value=\"".TXT_SAVE."\"></td></tr></form>";
+						$html_form = $html_form."<form action=\"index.php?\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">\n"
+						."<input type=\"hidden\" name=\"menu\" value=\"".$name."\"><input type=\"hidden\" name=\"act\" value=\"modify\">\n"
+						."<input type=\"hidden\" name=\"id\" value=\"".$id."\"><input type=\"hidden\" name=\"grp_name\" value=\"".$group_name."\">\n"
+						."<tr><td bgcolor=\"".$bgc."\">\n".$group_name."</td>\n"
+						."<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"0\"".$ck_noth."></td>\n"
+						."<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"1\"".$ck_view."></td>\n"
+						."<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"2\"".$ck_use."></td>\n"
+						."<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"3\"".$ck_admin."></td>\n"
+						."<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"submit\" value=\"".TXT_SAVE."\"></td></tr></form>\n";
 						if ($bgc == $tab_bgcolor) {$bgc = dechex(hexdec($tab_bgcolor) - hexdec("111111"));} else {$bgc = $tab_bgcolor;}
 					}			
 					
 					$html_form = $html_form."\n</table>\n";
-					$html_form = $html_form."</td></tr>";
+					$html_form = $html_form."</td></tr>\n";
   				$hide_form = true;
 					$call_function = "";
 				} else {
@@ -513,35 +513,35 @@ class ur_adm {
             if($ex[$v] > 0) {$xs[$v] = " checked";} else {$xs[$v] = "";}
           }
           $main_title = ADM_TITLE_GROUPRIGHT." : ".$group_name;				
-					$html_form = "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_GROUPS_NAME."</font>"
-          ."&nbsp;:&nbsp;<b>".$group_name."</b></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><b>[".ADM_GROUPS_MEMBERS."]</b></td></tr>"
-					."<tr><td align=\"center\" colspan=\"2\" bgcolor=\"".$tab_bgcolor."\"><font color=\"#990000\"><br>".ADM_GROUPS_CAUTION1."<br>"
-          ."<br>".ADM_GROUPS_CAUTION2."</font></td></tr>"
-					."<tr><td align=\"center\" colspan=\"2\" bgcolor=\"".$tab_bgcolor."\">\n<table>";
+					$html_form = "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">\n".ADM_GROUPS_NAME."</font>\n"
+          ."&nbsp;:&nbsp;<b>\n".$group_name."</b></td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><b>[".ADM_GROUPS_MEMBERS."]</b></td></tr>\n"
+					."<tr><td align=\"center\" colspan=\"2\" bgcolor=\"".$tab_bgcolor."\"><font color=\"#990000\"><br>\n".ADM_GROUPS_CAUTION1."<br>\n"
+          ."<br>\n".ADM_GROUPS_CAUTION2."</font></td></tr>\n"
+					."<tr><td align=\"center\" colspan=\"2\" bgcolor=\"".$tab_bgcolor."\">\n<table>\n";
 
-					$html_form = $html_form.$trow2."<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
-					."<input type=\"hidden\" name=\"menu\" value=\"".$name."\"><input type=\"hidden\" name=\"act\" value=\"modify\">"
-					."<input type=\"hidden\" name=\"grp_name\" value=\"".$group_name."\">"
-					."<tr><td bgcolor=\"".$tab_title_bgcolor."\">".TXT_MENUS."</td><td bgcolor=\"".$tab_title_bgcolor."\">".TXT_ADMINISTRATION."</td></tr>"
-					."<tr><td bgcolor=\"".$tab_bgcolor."\">".ADM_TITLE_ADDONS."</td>"
-          ."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_addons\" value=\"1\"".$xs[0]."></td></tr>"          				
-					."<tr><td bgcolor=\"".$tab_bgcolor."\">".ADM_TITLE_ASPECT."</td>"
-					."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_aspect\" value=\"1\"".$xs[1]."></td></tr>"
-					."<tr><td bgcolor=\"".$tab_bgcolor."\">".ADM_TITLE_COLORS."</td>"
-					."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_colors\" value=\"1\"".$xs[2]."></td></tr>"
-					."<tr><td bgcolor=\"".$tab_bgcolor."\">".ADM_TITLE_GROUPS."</td>"
-					."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_groups\" value=\"1\"".$xs[3]."></td></tr>"
-					."<tr><td bgcolor=\"".$tab_bgcolor."\">".ADM_TITLE_INDEX."</td>"
-          ."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_index\" value=\"1\"".$xs[4]."></td></tr>"
-					."<tr><td bgcolor=\"".$tab_bgcolor."\">".ADM_TITLE_PANELS."</td>"
-          ."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_panels\" value=\"1\"".$xs[5]."></td></tr>"
-					."<tr><td bgcolor=\"".$tab_bgcolor."\">".ADM_TITLE_SECURITY."</td>"
-          ."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_security\" value=\"1\"".$xs[6]."></td></tr>"
-					."<tr><td bgcolor=\"".$tab_bgcolor."\">".ADM_TITLE_USERS."</td>"
-          ."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_users\" value=\"1\"".$xs[7]."></td></tr>";					
+					$html_form = $html_form.$trow2."<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">\n"
+					."<input type=\"hidden\" name=\"menu\" value=\"".$name."\"><input type=\"hidden\" name=\"act\" value=\"modify\">\n"
+					."<input type=\"hidden\" name=\"grp_name\" value=\"".$group_name."\">\n"
+					."<tr><td bgcolor=\"".$tab_title_bgcolor."\">\n".TXT_MENUS."</td><td bgcolor=\"".$tab_title_bgcolor."\">\n".TXT_ADMINISTRATION."</td></tr>\n"
+					."<tr><td bgcolor=\"".$tab_bgcolor."\">\n".ADM_TITLE_ADDONS."</td>\n"
+          ."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_addons\" value=\"1\"".$xs[0]."></td></tr>\n"          				
+					."<tr><td bgcolor=\"".$tab_bgcolor."\">\n".ADM_TITLE_ASPECT."</td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_aspect\" value=\"1\"".$xs[1]."></td></tr>\n"
+					."<tr><td bgcolor=\"".$tab_bgcolor."\">\n".ADM_TITLE_COLORS."</td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_colors\" value=\"1\"".$xs[2]."></td></tr>\n"
+					."<tr><td bgcolor=\"".$tab_bgcolor."\">\n".ADM_TITLE_GROUPS."</td>\n"
+					."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_groups\" value=\"1\"".$xs[3]."></td></tr>\n"
+					."<tr><td bgcolor=\"".$tab_bgcolor."\">\n".ADM_TITLE_INDEX."</td>\n"
+          ."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_index\" value=\"1\"".$xs[4]."></td></tr>\n"
+					."<tr><td bgcolor=\"".$tab_bgcolor."\">\n".ADM_TITLE_PANELS."</td>\n"
+          ."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_panels\" value=\"1\"".$xs[5]."></td></tr>\n"
+					."<tr><td bgcolor=\"".$tab_bgcolor."\">\n".ADM_TITLE_SECURITY."</td>\n"
+          ."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_security\" value=\"1\"".$xs[6]."></td></tr>\n"
+					."<tr><td bgcolor=\"".$tab_bgcolor."\">\n".ADM_TITLE_USERS."</td>\n"
+          ."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_users\" value=\"1\"".$xs[7]."></td></tr>\n";					
 					
-					$html_form = $html_form."\n</table>\n</td></tr>";
+					$html_form = $html_form."\n</table>\n</td></tr>\n";
 					$hide_form = false;					
 					$call_function = "";
 				} else {
@@ -554,12 +554,12 @@ class ur_adm {
 				if ($res) {
 					list($groupid, $group_name, $group_desc) = $db->sql_fetchrow($res);
 					$main_title = ADM_TITLE_EDITGROUP;
-					$html_form = "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_GROUPS_NAME."</font></td>"
-					."<td bgcolor=\"".$tab_bgcolor."\">"
-					."<input type=\"text\" name=\"grpname\" size=\"36\" maxlength=\"32\" value=\"".$group_name."\" style=\"width: 210\"></td></tr>"
-					."<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_GROUPS_DESC."</font></td>"
-					."<td bgcolor=\"".$tab_bgcolor."\">"
-					."<input type=\"text\" name=\"grpdesc\" size=\"36\" maxlength=\"128\" value=\"".$group_desc."\" style=\"width: 210\"></td></tr>";
+					$html_form = "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">\n".ADM_GROUPS_NAME."</font></td>\n"
+					."<td bgcolor=\"".$tab_bgcolor."\">\n"
+					."<input type=\"text\" name=\"grpname\" size=\"36\" maxlength=\"32\" value=\"".$group_name."\" style=\"width: 210\"></td></tr>\n"
+					."<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">\n".ADM_GROUPS_DESC."</font></td>\n"
+					."<td bgcolor=\"".$tab_bgcolor."\">\n"
+					."<input type=\"text\" name=\"grpdesc\" size=\"36\" maxlength=\"128\" value=\"".$group_desc."\" style=\"width: 210\"></td></tr>\n";
 					$hide_form = false;
           $call_function = "";
 				} else {
@@ -580,25 +580,43 @@ class ur_adm {
 					if ($panel_type > 0) {$op_0 = " checked"; $op_1 = "";} else {$op_1 = " checked"; $op_0 = "";}
 
 					$main_title = ADM_TITLE_EDITPANEL;
-					$html_form = $trow2."<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_PANELS_TITLE."</font></td>"
-					."<td bgcolor=\"".$tab_bgcolor."\">"
-					."<input type=\"text\" name=\"pantit\" size=\"36\" maxlength=\"64\" value=\"".$panel_title."\" style=\"width: 210\"></td></tr><tr>"
-					."<tr><td valign=\"top\" bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_PANELS_BODY."</font></td>"
-					."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"radio\" name=\"pantype\" value=\"1\"".$op_0.">".ADM_PANELS_TYPE2."</td></tr><tr>"
-					."<td bgcolor=\"".$tab_bgcolor."\"></td><td bgcolor=\"".$tab_bgcolor."\"><select size=\"1\" name=\"panaddon\" style=\"width: 210\">";
+					$html_form = $trow2
+          ."<tr>\n"
+          ."  <td bgcolor=\"".$tab_bgcolor."\">\n"
+          ."    <font class=\"text_big_dark\">\n".ADM_PANELS_TITLE."</font>\n"
+          ."  </td>\n"
+          ."  <td bgcolor=\"".$tab_bgcolor."\">\n"
+          ."    <input type=\"text\" name=\"pantit\" size=\"36\" maxlength=\"64\" value=\"".$panel_title."\" style=\"width: 210\">\n"
+          ."  </td>\n"
+          ."</tr>\n"
+          ."<tr>\n"
+          ."  <td valign=\"top\" bgcolor=\"".$tab_bgcolor."\">\n"
+          ."    <font class=\"text_big_dark\">\n".ADM_PANELS_BODY."</font>\n"
+          ."  </td>\n"
+          ."  <td bgcolor=\"".$tab_bgcolor."\">\n"
+          ."    <input type=\"radio\" name=\"pantype\" value=\"1\"".$op_0.">\n".ADM_PANELS_TYPE2
+          ."  </td>\n"
+          ."</tr>\n"
+          ."<tr>\n"
+          ."  <td bgcolor=\"".$tab_bgcolor."\">  </td>\n"
+          ."  <td bgcolor=\"".$tab_bgcolor."\">\n"
+          ."    <select size=\"1\" name=\"panaddon\" style=\"width: 210\">\n";
 					$max = count($addon_list_name);
-					for ($v=0;$v<$max;$v++) {
+					for ($v=0;$v<$max;$v++)
+          {
 						if ($panel_addon == $v) {$pp = " selected";} else {$pp = "";}
-						$html_form = $html_form."<option value=\"".$addon_list_id[$v]."\"".$pp.">".$addon_list_name[$v]."</option>";
+						$html_form = $html_form."<option value=\"".$addon_list_id[$v]."\"".$pp.">\n".$addon_list_name[$v]."</option>\n";
 					}				
-					$html_form = $html_form."</select><br><br></td></tr><td bgcolor=\"".$tab_bgcolor."\"></td><td bgcolor=\"".$tab_bgcolor."\">"
-					."<input type=\"radio\" name=\"pantype\" value=\"0\"".$op_1.">".ADM_PANELS_TYPE1."</td></tr><tr>"
-					."<td bgcolor=\"".$tab_bgcolor."\"></td><td bgcolor=\"".$tab_bgcolor."\"><textarea rows=\"12\" cols=\"36\" name=\"pantxt\" style=\"width: 210\">".$panel_text."</textarea></td></tr>"
-					.$trow2."<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_PANELS_POSX."</font></td>"
-					."<td bgcolor=\"".$tab_bgcolor."\"><select size=\"1\" name=\"posw\">"
-					."<option value=\"0\"".$p_0.">(".TXT_CENTER.")</option><option value=\"1\"".$p_1.">".TXT_LEFT."</option>"
-					."<option value=\"2\"".$p_2.">".TXT_RIGHT."</option>"
-					."</select></td></tr>";
+					$html_form = $html_form."</select>\n<br>\n<br>\n</td>\n</tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n"
+					."<input type=\"radio\" name=\"pantype\" value=\"0\"".$op_1.">\n".ADM_PANELS_TYPE1."</td>\n</tr>\n<tr>\n"
+					."<td bgcolor=\"".$tab_bgcolor."\">\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n";
+//          <textarea rows=\"12\" cols=\"36\" name=\"pantxt\" style=\"width: 210\">\n".$panel_text."</textarea>\n</td>\n</tr>\n"
+					wysiwyg('pantxt',$panel_text,0);
+          echo $trow2."<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_PANELS_POSX."</font>\n</td>\n"
+					."<td bgcolor=\"".$tab_bgcolor."\">\n<select size=\"1\" name=\"posw\">\n"
+					."<option value=\"0\"".$p_0.">\n(".TXT_CENTER.")</option>\n<option value=\"1\"".$p_1.">\n".TXT_LEFT."</option>\n"
+					."<option value=\"2\"".$p_2.">\n".TXT_RIGHT."</option>\n"
+					."</select>\n</td>\n</tr>\n";
 					$hide_form = false;
 					$call_function = "";
 				} else {
@@ -614,17 +632,17 @@ class ur_adm {
 					list($userid, $user_name, $user_email, $user_url, $user_groups) = $db->sql_fetchrow($res);
 
 					$main_title = ADM_TITLE_EDITUSER;
-					$html_form = "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_USERS_NAME."</font></td>"
-					."<td bgcolor=\"".$tab_bgcolor."\"><b>".$user_name."</b></td></tr>"
-					."<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_USERS_EMAIL."</font></td>"
-					."<td bgcolor=\"".$tab_bgcolor."\">"
-					."<input type=\"text\" name=\"usrname\" size=\"36\" maxlength=\"128\" value=\"".$user_email."\" style=\"width: 210\"></td></tr>"
-					."<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_USERS_URL."</font></td>"
-					."<td bgcolor=\"".$tab_bgcolor."\">"
-					."<input type=\"text\" name=\"usrurl\" size=\"36\" maxlength=\"255\" value=\"".$user_url."\" style=\"width: 210\"></td></tr>"
-					."<tr><td colspan=\"2\" bgcolor=\"".$tab_bgcolor."\">";
+					$html_form = "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_USERS_NAME."</font>\n</td>\n"
+					."<td bgcolor=\"".$tab_bgcolor."\">\n<b>\n".$user_name."</b>\n</td>\n</tr>\n"
+					."<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_USERS_EMAIL."</font>\n</td>\n"
+					."<td bgcolor=\"".$tab_bgcolor."\">\n"
+					."<input type=\"text\" name=\"usrname\" size=\"36\" maxlength=\"128\" value=\"".$user_email."\" style=\"width: 210\">\n</td>\n</tr>\n"
+					."<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_USERS_URL."</font>\n</td>\n"
+					."<td bgcolor=\"".$tab_bgcolor."\">\n"
+					."<input type=\"text\" name=\"usrurl\" size=\"36\" maxlength=\"255\" value=\"".$user_url."\" style=\"width: 210\">\n</td>\n</tr>\n"
+					."<tr>\n<td colspan=\"2\" bgcolor=\"".$tab_bgcolor."\">\n";
 				
-					$html_form = $html_form."</td></tr>";
+					$html_form = $html_form."</td>\n</tr>\n";
 					$hide_form = false;
           $call_function = "users_groups_list";				
 				} else {
@@ -640,8 +658,8 @@ class ur_adm {
   				list($userid, $user_name) = $db->sql_fetchrow($res);
 
   				$main_title = ADM_TITLE_EDITUSER;
-  				$html_form = "<tr><td><br></td></tr><tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_USERS_NAME."&nbsp;:</font></td>"
-  				."<td valign=\"center\" bgcolor=\"".$tab_bgcolor."\"><font class=\"title_big_dark\">".$user_name."</font></td></tr>";
+  				$html_form = "<tr>\n<td>\n<br>\n</td>\n</tr>\n<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_USERS_NAME."&nbsp;:</font>\n</td>\n"
+  				."<td valign=\"center\" bgcolor=\"".$tab_bgcolor."\">\n<font class=\"title_big_dark\">\n".$user_name."</font>\n</td>\n</tr>\n";
   				$hide_form = true;
   				$call_function = "users_groups_list";				
   			} else {
@@ -652,21 +670,24 @@ class ur_adm {
 
 		if ($main_title) {
 			$page->title_content($main_title, "kernel/pics/ic-48/config.gif", 1);
-			if ($hide_form == false) {
-				echo "<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
-					."<input type=\"hidden\" name=\"menu\" value=\"".$name."\"><input type=\"hidden\" name=\"act\" value=\"modify\">"
-					."<input type=\"hidden\" name=\"id\" value=\"".$id."\">\n";
+			if ($hide_form == false)
+      {
+			  formw();
+				echo "<input type=\"hidden\" name=\"cmd\" value=\"admin\">\n"
+					."<input type=\"hidden\" name=\"menu\" value=\"".$name."\">\n<input type=\"hidden\" name=\"act\" value=\"modify\">\n"
+					."<input type=\"hidden\" name=\"id\" value=\"".$id."\">\n\n";
 			}
-			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
+			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">\n";
 			echo $html_form;
 			echo $trow2;
-			echo "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">";
-			if ($hide_form == false) {echo "<input type=\"submit\" value=\"".TXT_SAVE."\" style=\"width: 150\">";}
-			echo "</td></tr><tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">";
-			if ($call_function) {echo "<br>"; $call_function();}
-			echo $trow2."</td></tr>\n</table>\n";
-			if ($hide_form == false) {echo "</form>\n";}
-		} elseif ($errmsg) {
+			echo "<tr>\n<td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">\n";
+			if ($hide_form == false) {echo "<input type=\"submit\" value=\"".TXT_SAVE."\" style=\"width: 150\">\n";}
+			echo "</td>\n</tr>\n<tr>\n<td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">\n";
+			if ($call_function) {echo "<br>\n"; $call_function();}
+			echo $trow2."</td>\n</tr>\n\n</table>\n\n";
+			if ($hide_form == false) {echo "</form>\n\n";}
+		} elseif ($errmsg)
+    {
 			$page->MsgBox($errmsg, TXT_OK);			
 		}
 
@@ -685,8 +706,8 @@ class ur_adm {
 		global $contents_width, $header_banner, $header_bglogo, $panels_bgcolor, $panels_title_bgcolor, $panels_hspacing, $panels_vspacing;
 		global  $theme_style, $theme_edge, $tab_title_bgcolor, $tab_title_bgcolor2, $tab_bgcolor, $bars_001, $bars_002, $bars_003;
 	
-		$trow2 = "<tr><td bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">&nbsp;</td></tr>";
-		$trow4 = "<tr><td bgcolor=\"".$tab_bgcolor."\" colspan=\"4\">&nbsp;</td></tr>";
+		$trow2 = "<tr>\n<td bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">\n&nbsp;</td>\n</tr>\n";
+		$trow4 = "<tr>\n<td bgcolor=\"".$tab_bgcolor."\" colspan=\"4\">\n&nbsp;</td>\n</tr>\n";
 
 		// MAKE A SESSION CODE FOR USER FORM
 		if (strtolower($name) == "users") {
@@ -708,13 +729,13 @@ class ur_adm {
 		case "addons":
 			$page->title_content(ADM_TITLE_ADDONS, "kernel/pics/ic-48/config.gif");
 
-			echo "<br>\n<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"1\">";
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\"><b>".TXT_ADDONS."&nbsp;</b></td><td bgcolor=\"".$tab_title_bgcolor2."\">&nbsp;</td>"
-				."<td bgcolor=\"".$tab_title_bgcolor2."\">&nbsp;</td><td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\"><b>".TXT_RIGHTS."</b></td></tr>";
+			echo "<br>\n\n<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"1\">\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\">\n<b>\n".TXT_ADDONS."&nbsp;</b>\n</td>\n<td bgcolor=\"".$tab_title_bgcolor2."\">\n&nbsp;</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor2."\">\n&nbsp;</td>\n<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\">\n<b>\n".TXT_RIGHTS."</b>\n</td>\n</tr>\n";
 			build_table_addons();
 
 			echo $trow4;
-			echo "\n</table>\n";
+			echo "\n</table>\n\n";
 		break;
 
 		// ========================================================
@@ -742,96 +763,98 @@ class ur_adm {
 
 			$page->title_content(ADM_TITLE_ASPECT, "kernel/pics/ic-48/config.gif");
 				
-			echo "<br><form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
-				."<input type=\"hidden\" name=\"menu\" value=\"aspect\"><input type=\"hidden\" name=\"act\" value=\"modify\">";
-			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"title_dark\">".TXT_GENERAL."</font></td></tr>";
+			echo "<br>\n";
+      formw();
+      echo "<input type=\"hidden\" name=\"cmd\" value=\"admin\">\n"
+				."<input type=\"hidden\" name=\"menu\" value=\"aspect\">\n<input type=\"hidden\" name=\"act\" value=\"modify\">\n";
+			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\">\n<font class=\"title_dark\">\n".TXT_GENERAL."</font>\n</td>\n</tr>\n";
 			echo $trow2;
 
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_THSTYLE."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><select size=\"1\" name=\"th_style\" style=\"width: 180\">";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_THSTYLE."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<select size=\"1\" name=\"th_style\" style=\"width: 180\">\n";
 			$hd = opendir("themes/texts");
 			while ($file = readdir($hd)) {
 				if ($file != ".") {
 					if ($file != "..") {
 						if (strtolower($theme_style) == strtolower($file)) {$strt = " selected";} else {$strt = "";}
-						if ($file != "index.html") {echo "<option".$strt.">".$file."</option>";}
+						if ($file != "index.html") {echo "<option".$strt.">\n".$file."</option>\n";}
 					}
 				}
 			}
 			closedir($hd);
-			echo "</select></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_WIDTH."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"swidth\" size=\"3\" maxlength=\"3\" value=\"".$site_width."\">&nbsp;%</td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_CWIDTH."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"cwidth\" size=\"3\" maxlength=\"3\" value=\"".$contents_width."\">&nbsp;%</td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_COLUMN3."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"hcspace\" size=\"3\" maxlength=\"3\" value=\"".$panels_hspacing."\">&nbsp;".TXT_PIXELS."</td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_VSPACE."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"vspace\" size=\"3\" maxlength=\"3\" value=\"".$panels_vspacing."\">&nbsp;".TXT_PIXELS."</td></tr>";
+			echo "</select>\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_WIDTH."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"text\" name=\"swidth\" size=\"3\" maxlength=\"3\" value=\"".$site_width."\">\n&nbsp;%</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_CWIDTH."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"text\" name=\"cwidth\" size=\"3\" maxlength=\"3\" value=\"".$contents_width."\">\n&nbsp;%</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_COLUMN3."</font>\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n"
+				."<input type=\"text\" name=\"hcspace\" size=\"3\" maxlength=\"3\" value=\"".$panels_hspacing."\">\n&nbsp;".TXT_PIXELS."</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_VSPACE."</font>\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n"
+				."<input type=\"text\" name=\"vspace\" size=\"3\" maxlength=\"3\" value=\"".$panels_vspacing."\">\n&nbsp;".TXT_PIXELS."</td>\n</tr>\n";
 			echo $trow2;
 
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"title_dark\">".TXT_HEADER."</font></td></tr>";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\">\n<font class=\"title_dark\">\n".TXT_HEADER."</font>\n</td>\n</tr>\n";
 			echo $trow2;
 /*
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_LOGO."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"logo\" size=\"36\" style=\"width: 180\" maxlength=\"255\" value=\"".$site_logo."\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_BGLOGO."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"bglogo\" size=\"36\" style=\"width: 180\" maxlength=\"255\" value=\"".$header_bglogo."\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_RIGHTBANNER."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"banner\" size=\"36\" style=\"width: 180\" maxlength=\"255\" value=\"".$header_banner."\"></td></tr>";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_LOGO."</font>\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n"
+				."<input type=\"text\" name=\"logo\" size=\"36\" style=\"width: 180\" maxlength=\"255\" value=\"".$site_logo."\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_BGLOGO."</font>\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n"
+				."<input type=\"text\" name=\"bglogo\" size=\"36\" style=\"width: 180\" maxlength=\"255\" value=\"".$header_bglogo."\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_RIGHTBANNER."</font>\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n"
+				."<input type=\"text\" name=\"banner\" size=\"36\" style=\"width: 180\" maxlength=\"255\" value=\"".$header_banner."\">\n</td>\n</tr>\n";
 
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_BANNHEIGHT."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"hheight\" size=\"3\" maxlength=\"3\" value=\"".$head_height."\">&nbsp;".TXT_PIXELS."</td></tr>";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_BANNHEIGHT."</font>\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n"
+				."<input type=\"text\" name=\"hheight\" size=\"3\" maxlength=\"3\" value=\"".$head_height."\">\n&nbsp;".TXT_PIXELS."</td>\n</tr>\n";
 */				
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_BUP."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><select size=\"1\" name=\"bar1\" style=\"width: 180\">"
-				."<option value=\"0\"".$bar1_0.">(".TXT_NOTHING.")</option><option value=\"1\"".$bar1_1.">".TXT_BARS_SUPPORT."</option>"
-				."<option value=\"2\"".$bar1_2.">".TXT_BARS_INDEX."</option><option value=\"3\"".$bar1_3.">".TXT_BARS_SEARCH."</option>"
-				."<option value=\"4\"".$bar1_4.">".TXT_BARS_USER."</option></select></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_BDOWN."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><select size=\"1\" name=\"bar2\" style=\"width: 180\">"
-				."<option value=\"0\"".$bar2_0.">(".TXT_NOTHING.")</option><option value=\"1\"".$bar2_1.">".TXT_BARS_SUPPORT."</option>"
-				."<option value=\"2\"".$bar2_2.">".TXT_BARS_INDEX."</option><option value=\"3\"".$bar2_3.">".TXT_BARS_SEARCH."</option>"
-				."<option value=\"4\"".$bar2_4.">".TXT_BARS_USER."</option></select></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_BMOREDOWN."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><select size=\"1\" name=\"bar3\" style=\"width: 180\">"
-				."<option value=\"0\"".$bar3_0.">(".TXT_NOTHING.")</option><option value=\"1\"".$bar3_1.">".TXT_BARS_SUPPORT."</option>"
-				."<option value=\"2\"".$bar3_2.">".TXT_BARS_INDEX."</option><option value=\"3\"".$bar3_3.">".TXT_BARS_SEARCH."</option>"
-				."<option value=\"4\"".$bar3_4.">".TXT_BARS_USER."</option></select></td></tr>";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_BUP."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<select size=\"1\" name=\"bar1\" style=\"width: 180\">\n"
+				."<option value=\"0\"".$bar1_0.">\n(".TXT_NOTHING.")</option>\n<option value=\"1\"".$bar1_1.">\n".TXT_BARS_SUPPORT."</option>\n"
+				."<option value=\"2\"".$bar1_2.">\n".TXT_BARS_INDEX."</option>\n<option value=\"3\"".$bar1_3.">\n".TXT_BARS_SEARCH."</option>\n"
+				."<option value=\"4\"".$bar1_4.">\n".TXT_BARS_USER."</option>\n</select>\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_BDOWN."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<select size=\"1\" name=\"bar2\" style=\"width: 180\">\n"
+				."<option value=\"0\"".$bar2_0.">\n(".TXT_NOTHING.")</option>\n<option value=\"1\"".$bar2_1.">\n".TXT_BARS_SUPPORT."</option>\n"
+				."<option value=\"2\"".$bar2_2.">\n".TXT_BARS_INDEX."</option>\n<option value=\"3\"".$bar2_3.">\n".TXT_BARS_SEARCH."</option>\n"
+				."<option value=\"4\"".$bar2_4.">\n".TXT_BARS_USER."</option>\n</select>\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_BMOREDOWN."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<select size=\"1\" name=\"bar3\" style=\"width: 180\">\n"
+				."<option value=\"0\"".$bar3_0.">\n(".TXT_NOTHING.")</option>\n<option value=\"1\"".$bar3_1.">\n".TXT_BARS_SUPPORT."</option>\n"
+				."<option value=\"2\"".$bar3_2.">\n".TXT_BARS_INDEX."</option>\n<option value=\"3\"".$bar3_3.">\n".TXT_BARS_SEARCH."</option>\n"
+				."<option value=\"4\"".$bar3_4.">\n".TXT_BARS_USER."</option>\n</select>\n</td>\n</tr>\n";
 			echo $trow2;
 			
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"title_dark\">".TXT_COLUMNS."</font></td></tr>";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\">\n<font class=\"title_dark\">\n".TXT_COLUMNS."</font>\n</td>\n</tr>\n";
 			echo $trow2;
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_COLUMN1."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"lsize\" size=\"3\" maxlength=\"3\" value=\"".$col_left_width."\">&nbsp;".TXT_PIXELS."</td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_COLUMN2."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"rsize\" size=\"3\" maxlength=\"3\" value=\"".$col_right_width."\">&nbsp;".TXT_PIXELS."</td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"></td><td bgcolor=\"".$tab_bgcolor."\">(".ADM_ASPECT_COLUMNCOM.")</td></tr>";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_COLUMN1."</font>\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n"
+				."<input type=\"text\" name=\"lsize\" size=\"3\" maxlength=\"3\" value=\"".$col_left_width."\">\n&nbsp;".TXT_PIXELS."</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_COLUMN2."</font>\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n"
+				."<input type=\"text\" name=\"rsize\" size=\"3\" maxlength=\"3\" value=\"".$col_right_width."\">\n&nbsp;".TXT_PIXELS."</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n(".ADM_ASPECT_COLUMNCOM.")</td>\n</tr>\n";
 			echo $trow2;
 
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"title_dark\">".TXT_PANELS."</font></td></tr>";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\">\n<font class=\"title_dark\">\n".TXT_PANELS."</font>\n</td>\n</tr>\n";
 			echo $trow2;
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_THGFXPANELS."&nbsp;</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><select size=\"1\" name=\"th_blocks\" style=\"width: 180\">";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_ASPECT_THGFXPANELS."&nbsp;</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<select size=\"1\" name=\"th_blocks\" style=\"width: 180\">\n";
 			$hd = opendir("themes/borders");
 			while ($file = readdir($hd)) {
 				if ($file != ".") {
 					if ($file != "..") {
 						if (strtolower($theme_edge) == strtolower($file)) {$strt = " selected";} else {$strt = "";}
-						if ($file != "index.html") {echo "<option".$strt.">".$file."</option>";}
+						if ($file != "index.html") {echo "<option".$strt.">\n".$file."</option>\n";}
 					}
 				}
 			}
 			closedir($hd);
-			echo "</select></td></tr>";
+			echo "</select>\n</td>\n</tr>\n";
 			echo $trow2;
 
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"text_big_dark\">&nbsp;</font></td>";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\">\n<font class=\"text_big_dark\">\n&nbsp;</font>\n</td>\n";
 			echo $trow2;
-			echo "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\"><font class=\"text_big_dark\">"
-				."<input type=\"submit\" value=\"".TXT_SAVE."\" style=\"width: 150\"></font></td>";
-			echo "</table></form>";
+			echo "<tr>\n<td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">\n<font class=\"text_big_dark\">\n"
+				."<input type=\"submit\" value=\"".TXT_SAVE."\" style=\"width: 150\">\n</font>\n</td>\n";
+			echo "</table>\n</form>\n";
 		break;
 
 		// ========================================================
@@ -840,37 +863,37 @@ class ur_adm {
 		case "colors":
 			$page->title_content(ADM_TITLE_COLORS, "kernel/pics/ic-48/config.gif");
 
-			echo "<br><center>".ADM_COLORS_CAUTION1."</center><br>\n<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
-				."<input type=\"hidden\" name=\"menu\" value=\"colors\"><input type=\"hidden\" name=\"act\" value=\"modify\">\n";
-			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"title_dark\">".TXT_GENERAL."</font></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLSITE."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcolsite\" size=\"7\" maxlength=\"6\" value=\"".$site_bgcolor_1."\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLSECOND."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcolsupp\" size=\"7\" maxlength=\"6\" value=\"".$site_bgcolor_2."\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".TXT_TEXT."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"txtcolsite\" size=\"7\" maxlength=\"6\" value=\"".$site_txtcolor."\"></td></tr>";				
+			echo "<br>\n<center>\n".ADM_COLORS_CAUTION1."</center>\n<br>\n\n<form action=\"index.php\" method=\"post\">\n<input type=\"hidden\" name=\"cmd\" value=\"admin\">\n"
+				."<input type=\"hidden\" name=\"menu\" value=\"colors\">\n<input type=\"hidden\" name=\"act\" value=\"modify\">\n\n";
+			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\">\n<font class=\"title_dark\">\n".TXT_GENERAL."</font>\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_COLORS_BGCOLSITE."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"text\" name=\"bgcolsite\" size=\"7\" maxlength=\"6\" value=\"".$site_bgcolor_1."\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_COLORS_BGCOLSECOND."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"text\" name=\"bgcolsupp\" size=\"7\" maxlength=\"6\" value=\"".$site_bgcolor_2."\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".TXT_TEXT."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"text\" name=\"txtcolsite\" size=\"7\" maxlength=\"6\" value=\"".$site_txtcolor."\">\n</td>\n</tr>\n";				
 			
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"title_dark\">".TXT_PANELS."</font></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLTITLEPANEL."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcoltitpanel\" size=\"7\" maxlength=\"6\" value=\"".$panels_title_bgcolor."\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLPANEL."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcolpanel\" size=\"7\" maxlength=\"6\" value=\"".$panels_bgcolor."\"></td></tr>";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\">\n<font class=\"title_dark\">\n".TXT_PANELS."</font>\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_COLORS_BGCOLTITLEPANEL."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"text\" name=\"bgcoltitpanel\" size=\"7\" maxlength=\"6\" value=\"".$panels_title_bgcolor."\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_COLORS_BGCOLPANEL."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"text\" name=\"bgcolpanel\" size=\"7\" maxlength=\"6\" value=\"".$panels_bgcolor."\">\n</td>\n</tr>\n";
 			
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"title_dark\">".TXT_CONTENTS."</font></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLCONTENTS."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcolcontents\" size=\"7\" maxlength=\"6\" value=\"".$contents_bgcolor."\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLTITLETABLE."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcoltittab\" size=\"7\" maxlength=\"6\" value=\"".$tab_title_bgcolor."\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLTITLETABLE2."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcoltab2\" size=\"7\" maxlength=\"6\" value=\"".$tab_title_bgcolor2."\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLTABLE1."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcoltab\" size=\"7\" maxlength=\"6\" value=\"".$tab_bgcolor."\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"text_big_dark\">&nbsp;</font></td>";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\">\n<font class=\"title_dark\">\n".TXT_CONTENTS."</font>\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_COLORS_BGCOLCONTENTS."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"text\" name=\"bgcolcontents\" size=\"7\" maxlength=\"6\" value=\"".$contents_bgcolor."\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_COLORS_BGCOLTITLETABLE."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"text\" name=\"bgcoltittab\" size=\"7\" maxlength=\"6\" value=\"".$tab_title_bgcolor."\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_COLORS_BGCOLTITLETABLE2."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"text\" name=\"bgcoltab2\" size=\"7\" maxlength=\"6\" value=\"".$tab_title_bgcolor2."\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_COLORS_BGCOLTABLE1."</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"text\" name=\"bgcoltab\" size=\"7\" maxlength=\"6\" value=\"".$tab_bgcolor."\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\">\n<font class=\"text_big_dark\">\n&nbsp;</font>\n</td>\n";
 			echo $trow2;
-			echo "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\"><font class=\"text_big_dark\">"
-				."<input type=\"submit\" value=\"".TXT_SAVE."\" style=\"width: 150\"></font></td>";
-			echo "</table></form>";
+			echo "<tr>\n<td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">\n<font class=\"text_big_dark\">\n"
+				."<input type=\"submit\" value=\"".TXT_SAVE."\" style=\"width: 150\">\n</font>\n</td>\n";
+			echo "</table>\n</form>\n";
 		break;
 
 		// ========================================================
@@ -879,33 +902,35 @@ class ur_adm {
 		case "groups":
 			$page->title_content(ADM_TITLE_GROUPS, "kernel/pics/ic-48/config.gif");
 
-			echo "<br>\n<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"1\">";
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_GROUPS."&nbsp;</b></td><td bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_DESCRIPTION."</b></td>"
-				."<td bgcolor=\"".$tab_title_bgcolor."\">&nbsp;</td><td bgcolor=\"".$tab_title_bgcolor."\">&nbsp;</td></tr>";
+			echo "<br>\n\n<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"1\">\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_GROUPS."&nbsp;</b>\n</td>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_DESCRIPTION."</b>\n</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor."\">\n&nbsp;</td>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n&nbsp;</td>\n</tr>\n";
 			build_table_groups();
 
 			echo $trow4;
-			echo "\n</table>\n";
+			echo "\n</table>\n\n";
 			$page->html_table_end();
 
 			$page->html_table_start(true);
 			$page->title_content(ADM_TITLE_ADDGROUP, "kernel/pics/ic-48/config.gif");
 
 			// ADD FORM
-			echo "<br>\n<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
-				."<input type=\"hidden\" name=\"menu\" value=\"groups\"><input type=\"hidden\" name=\"act\" value=\"add\">\n";
-			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_GROUPS_NAME."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"grpname\" size=\"36\" maxlength=\"32\" style=\"width: 210\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_GROUPS_DESC."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"grpdesc\" size=\"36\" maxlength=\"128\" style=\"width: 210\"></td></tr>";
+			echo "<br>\n\n";
+      formw();
+      echo "<input type=\"hidden\" name=\"cmd\" value=\"admin\">\n"
+				  ."<input type=\"hidden\" name=\"menu\" value=\"groups\">\n<input type=\"hidden\" name=\"act\" value=\"add\">\n\n";
+			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_GROUPS_NAME."</font>\n</td>\n"
+				  ."<td bgcolor=\"".$tab_bgcolor."\">\n"
+				  ."<input type=\"text\" name=\"grpname\" size=\"36\" maxlength=\"32\" style=\"width: 210\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_GROUPS_DESC."</font>\n</td>\n"
+				  ."<td bgcolor=\"".$tab_bgcolor."\">\n"
+				  ."<input type=\"text\" name=\"grpdesc\" size=\"36\" maxlength=\"128\" style=\"width: 210\">\n</td>\n</tr>\n";
 			echo $trow4;
-			echo "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\"><font class=\"text_big_dark\">"
-				."<input type=\"submit\" value=\"".TXT_ADD."\" style=\"width: 150\"></font></td></tr>";
+			echo "<tr>\n<td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">\n<font class=\"text_big_dark\">\n"
+				  ."<input type=\"submit\" value=\"".TXT_ADD."\" style=\"width: 150\">\n</font>\n</td>\n</tr>\n";
 			echo $trow4;
-			echo "\n</table>\n</form>";			
+			echo "\n</table>\n\n</form>\n";			
 		break;
 
 		case "index":
@@ -919,17 +944,17 @@ class ur_adm {
 			
 			$page->title_content(ADM_TITLE_PANELS, "kernel/pics/ic-48/config.gif");
 
-			echo "<br>\n<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"1\">";
+			echo "<br>\n\n<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"1\">\n";
 
 			// ========================================================
 			// LEFT PANELS
 			// ========================================================
-			echo "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"6\"><font class=\"title_big_dark\">".ADM_PANELS_LPANELS."</font></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_ID."</b></td>"
-				."<td bgcolor=\"".$tab_title_bgcolor."\"><b>".ADM_PANELS_TITLE."&nbsp;</b></td>"
-				."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_ADDONS."</b></td>"
-				."<td bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_WEIGHT."</b></td>"
-				."<td bgcolor=\"".$tab_title_bgcolor."\">&nbsp;</td><td bgcolor=\"".$tab_title_bgcolor."\">&nbsp;</td></tr>";
+			echo "<tr>\n<td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"6\">\n<font class=\"title_big_dark\">\n".ADM_PANELS_LPANELS."</font>\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_ID."</b>\n</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".ADM_PANELS_TITLE."&nbsp;</b>\n</td>\n"
+				."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_ADDONS."</b>\n</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_WEIGHT."</b>\n</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor."\">\n&nbsp;</td>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n&nbsp;</td>\n</tr>\n";
 			build_table_panels(1);
 			// ========================================================
 
@@ -937,12 +962,12 @@ class ur_adm {
 			// CENTERED PANELS
 			// ========================================================
 			echo $trow4;
-			echo "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"6\"><font class=\"title_big_dark\">".ADM_PANELS_CPANELS."</font></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_ID."</b></td>"
-				."<td bgcolor=\"".$tab_title_bgcolor."\"><b>".ADM_PANELS_TITLE."&nbsp;</b></td>"
-				."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_ADDONS."</b></td>"
-				."<td bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_WEIGHT."</b></td>"
-				."<td bgcolor=\"".$tab_title_bgcolor."\">&nbsp;</td><td bgcolor=\"".$tab_title_bgcolor."\">&nbsp;</td></tr>";
+			echo "<tr>\n<td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"6\">\n<font class=\"title_big_dark\">\n".ADM_PANELS_CPANELS."</font>\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_ID."</b>\n</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".ADM_PANELS_TITLE."&nbsp;</b>\n</td>\n"
+				."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_ADDONS."</b>\n</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_WEIGHT."</b>\n</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor."\">\n&nbsp;</td>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n&nbsp;</td>\n</tr>\n";
 			build_table_panels(0);
 			// ========================================================
 
@@ -950,51 +975,54 @@ class ur_adm {
 			// RIGHT PANELS
 			// ========================================================
 			echo $trow4;
-			echo "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"6\"><font class=\"title_big_dark\">".ADM_PANELS_RPANELS."</font></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_ID."</b></td>"
-				."<td bgcolor=\"".$tab_title_bgcolor."\"><b>".ADM_PANELS_TITLE."&nbsp;</b></td>"
-				."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_ADDONS."</b></td>"
-				."<td bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_WEIGHT."</b></td>"
-				."<td bgcolor=\"".$tab_title_bgcolor."\">&nbsp;</td><td bgcolor=\"".$tab_title_bgcolor."\">&nbsp;</td></tr>";
+			echo "<tr>\n<td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"6\">\n<font class=\"title_big_dark\">\n".ADM_PANELS_RPANELS."</font>\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_ID."</b>\n</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".ADM_PANELS_TITLE."&nbsp;</b>\n</td>\n"
+				."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_ADDONS."</b>\n</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_WEIGHT."</b>\n</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor."\">\n&nbsp;</td>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n&nbsp;</td>\n</tr>\n";
 			build_table_panels(2);
 			// ========================================================
 
 			echo $trow4;
-			echo "\n</table>\n";
+			echo "\n</table>\n\n";
 			$page->html_table_end();
 
 			$page->html_table_start(true);
 			$page->title_content(ADM_TITLE_ADDPANEL, "kernel/pics/ic-48/config.gif");
 
 			// ADD FORM
-			echo "<br>\n<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
-				."<input type=\"hidden\" name=\"menu\" value=\"panels\"><input type=\"hidden\" name=\"act\" value=\"add\">\n";
-			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_PANELS_TITLE."</font><br><br></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"pantit\" size=\"36\" maxlength=\"64\" style=\"width: 210\"></td></tr>";				
-			echo "<tr><td valign=\"top\" bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_PANELS_BODY."</font></td>";
-			echo "<td bgcolor=\"".$tab_bgcolor."\"><input type=\"radio\" name=\"pantype\" value=\"1\">".ADM_PANELS_TYPE2."</td></tr><tr>"
-				."<td bgcolor=\"".$tab_bgcolor."\"></td><td bgcolor=\"".$tab_bgcolor."\"><select size=\"1\" name=\"panaddon\" style=\"width: 210\">";
+			echo "<br>\n\n";
+      formw();
+      echo "<input type=\"hidden\" name=\"cmd\" value=\"admin\">\n"
+				  ."<input type=\"hidden\" name=\"menu\" value=\"panels\">\n<input type=\"hidden\" name=\"act\" value=\"add\">\n\n";
+			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_PANELS_TITLE."</font>\n<br>\n<br>\n</td>\n"
+				  ."<td bgcolor=\"".$tab_bgcolor."\">\n"
+				  ."<input type=\"text\" name=\"pantit\" size=\"36\" maxlength=\"64\" style=\"width: 210\">\n</td>\n</tr>\n";				
+			echo "<tr>\n<td valign=\"top\" bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_PANELS_BODY."</font>\n</td>\n";
+			echo "<td bgcolor=\"".$tab_bgcolor."\">\n<input type=\"radio\" name=\"pantype\" value=\"1\">\n".ADM_PANELS_TYPE2."</td>\n</tr>\n<tr>\n"
+				  ."<td bgcolor=\"".$tab_bgcolor."\">\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n<select size=\"1\" name=\"panaddon\" style=\"width: 210\">\n";
 			$max = count($addon_list_name);
 			for ($v=0;$v<$max;$v++) {
-				echo "<option value=\"".$addon_list_id[$v]."\">".$addon_list_name[$v]."</option>";
+				echo "<option value=\"".$addon_list_id[$v]."\">\n".$addon_list_name[$v]."</option>\n";
 			}				
-			echo "</select><br><br></td></tr><td bgcolor=\"".$tab_bgcolor."\"></td><td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"radio\" name=\"pantype\" value=\"0\" checked>".ADM_PANELS_TYPE1."</td></tr><tr>"			
-				."<td bgcolor=\"".$tab_bgcolor."\"></td><td bgcolor=\"".$tab_bgcolor."\">"
-				."<textarea rows=\"12\" cols=\"36\" name=\"pantxt\" style=\"width: 210\"></textarea></td></tr><tr>";
+			echo "</select>\n<br>\n<br>\n</td>\n</tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n"
+				  ."<input type=\"radio\" name=\"pantype\" value=\"0\" checked>\n".ADM_PANELS_TYPE1."</td>\n</tr>\n<tr>\n"			
+				  ."<td bgcolor=\"".$tab_bgcolor."\">\n</td>\n<td bgcolor=\"".$tab_bgcolor."\">\n";
+//				  ."<textarea rows=\"12\" cols=\"36\" name=\"pantxt\" style=\"width: 210\">\n</textarea>\n</td>\n</tr>\n<tr>\n";
+      wysiwyg('pantxt','',0);
 			echo $trow2;
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_PANELS_POSX."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><select size=\"1\" name=\"posw\">"
-				."<option value=\"0\">(".TXT_CENTER.")</option><option value=\"1\">".TXT_LEFT."</option>"
-				."<option value=\"2\">".TXT_RIGHT."</option>"
-				."</select></td></tr>";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_PANELS_POSX."</font>\n</td>\n"
+				  ."<td bgcolor=\"".$tab_bgcolor."\">\n<select size=\"1\" name=\"posw\">\n"
+				  ."<option value=\"0\">\n(".TXT_CENTER.")</option>\n<option value=\"1\">\n".TXT_LEFT."</option>\n"
+				  ."<option value=\"2\">\n".TXT_RIGHT."</option>\n"
+				  ."</select>\n</td>\n</tr>\n";
 			echo $trow2;
-			echo "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">"
-				."<input type=\"submit\" value=\"".TXT_ADD."\" style=\"width: 150\"></td></tr>";
+			echo "<tr>\n<td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">\n"
+				  ."<input type=\"submit\" value=\"".TXT_ADD."\" style=\"width: 150\">\n</td>\n</tr>\n";
 			echo $trow2;
-			echo "\n</table>\n</form>";
+			echo "\n</table>\n\n</form>\n";
 		break;
 
 		// ========================================================
@@ -1007,64 +1035,66 @@ class ur_adm {
 			if ($secur_code == 0) {$s1_1 = " checked"; $s1_2 = "";} else {$s1_2 = " checked"; $s1_1 = "";}
 
 			$page->title_content(ADM_TITLE_SECURITY, "kernel/pics/ic-48/config.gif");
-			echo "<br>\n<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
-				."<input type=\"hidden\" name=\"menu\" value=\"security\"><input type=\"hidden\" name=\"act\" value=\"modify\">\n";
-			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_SECUR_USECODE."&nbsp;&nbsp;</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"radio\" name=\"sec_code\" value=\"1\"".$s1_2.">".TXT_YES."&nbsp;&nbsp;"
-				."<input type=\"radio\" name=\"sec_code\" value=\"0\"".$s1_1.">".TXT_NO."</td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">...</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\">...</td></tr>";
+			echo "<br>\n\n<form action=\"index.php\" method=\"post\">\n<input type=\"hidden\" name=\"cmd\" value=\"admin\">\n"
+				."<input type=\"hidden\" name=\"menu\" value=\"security\">\n<input type=\"hidden\" name=\"act\" value=\"modify\">\n\n";
+			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_SECUR_USECODE."&nbsp;&nbsp;</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n"
+				."<input type=\"radio\" name=\"sec_code\" value=\"1\"".$s1_2.">\n".TXT_YES."&nbsp;&nbsp;"
+				."<input type=\"radio\" name=\"sec_code\" value=\"0\"".$s1_1.">\n".TXT_NO."</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n...</font>\n</td>\n"
+				."<td bgcolor=\"".$tab_bgcolor."\">\n...</td>\n</tr>\n";
 			echo $trow4;
-			echo "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">"
-				."<input type=\"submit\" value=\"".TXT_SAVE."\" style=\"width: 150\"></td></tr>";
+			echo "<tr>\n<td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">\n"
+				."<input type=\"submit\" value=\"".TXT_SAVE."\" style=\"width: 150\">\n</td>\n</tr>\n";
 			echo $trow4;
-			echo "\n</table>\n</form>";				
+			echo "\n</table>\n\n</form>\n";				
 		break;
 
 		case "users":
 			$page->title_content(ADM_TITLE_USERS, "kernel/pics/ic-48/config.gif");
 
-			echo "<br>\n<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"1\">";
+			echo "<br>\n\n<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"1\">\n";
 
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_USERS."&nbsp;</b></td><td bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_LOG_LAST."</b></td>"
-				."<td bgcolor=\"".$tab_title_bgcolor."\"></td><td bgcolor=\"".$tab_title_bgcolor."\">&nbsp;</td></tr>";
+			echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_USERS."&nbsp;</b>\n</td>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".TXT_LOG_LAST."</b>\n</td>\n"
+				."<td bgcolor=\"".$tab_title_bgcolor."\">\n</td>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n&nbsp;</td>\n</tr>\n";
 			build_table_users();
 
 			echo $trow4;
-			echo "\n</table>\n";
+			echo "\n</table>\n\n";
 			$page->html_table_end();
 
 			$page->html_table_start(true);
 			$page->title_content(ADM_TITLE_ADDUSER, "kernel/pics/ic-48/config.gif");
 
 			// ADD FORM
-			echo "<br>\n<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
-				."<input type=\"hidden\" name=\"menu\" value=\"users\"><input type=\"hidden\" name=\"act\" value=\"add\">"
-				."<input type=\"hidden\" name=\"sec\" value=\"".$code."\">\n";
-			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_USERS_NAME."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"usrname\" size=\"36\" maxlength=\"24\" style=\"width: 210\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_USERS_PASS."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"password\" name=\"pass1\" size=\"16\" maxlength=\"12\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".TXT_LOG_CONFIRMPASS."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"password\" name=\"pass2\" size=\"16\" maxlength=\"12\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_USERS_EMAIL."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"usremail\" size=\"36\" maxlength=\"128\" style=\"width: 210\"></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_USERS_URL."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"usrurl\" size=\"36\" maxlength=\"255\" style=\"width: 210\"></td></tr>";
+			echo "<br>\n\n";
+      formw();
+      echo "<input type=\"hidden\" name=\"cmd\" value=\"admin\">\n"
+				  ."<input type=\"hidden\" name=\"menu\" value=\"users\">\n<input type=\"hidden\" name=\"act\" value=\"add\">\n"
+				  ."<input type=\"hidden\" name=\"sec\" value=\"".$code."\">\n\n";
+			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_USERS_NAME."</font>\n</td>\n"
+				  ."<td bgcolor=\"".$tab_bgcolor."\">\n"
+				  ."<input type=\"text\" name=\"usrname\" size=\"36\" maxlength=\"24\" style=\"width: 210\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_USERS_PASS."</font>\n</td>\n"
+				  ."<td bgcolor=\"".$tab_bgcolor."\">\n"
+				  ."<input type=\"password\" name=\"pass1\" size=\"16\" maxlength=\"12\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".TXT_LOG_CONFIRMPASS."</font>\n</td>\n"
+			 	  ."<td bgcolor=\"".$tab_bgcolor."\">\n"
+				  ."<input type=\"password\" name=\"pass2\" size=\"16\" maxlength=\"12\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_USERS_EMAIL."</font>\n</td>\n"
+				  ."<td bgcolor=\"".$tab_bgcolor."\">\n"
+				  ."<input type=\"text\" name=\"usremail\" size=\"36\" maxlength=\"128\" style=\"width: 210\">\n</td>\n</tr>\n";
+			echo "<tr>\n<td bgcolor=\"".$tab_bgcolor."\">\n<font class=\"text_big_dark\">\n".ADM_USERS_URL."</font>\n</td>\n"
+				  ."<td bgcolor=\"".$tab_bgcolor."\">\n"
+				  ."<input type=\"text\" name=\"usrurl\" size=\"36\" maxlength=\"255\" style=\"width: 210\">\n</td>\n</tr>\n";
 			
 			echo $trow4;
-			echo "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\"><font class=\"text_big_dark\">"
-				."<input type=\"submit\" value=\"".TXT_ADD."\" style=\"width: 150\"></font></td></tr>";
+			echo "<tr>\n<td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">\n<font class=\"text_big_dark\">\n"
+				  ."<input type=\"submit\" value=\"".TXT_ADD."\" style=\"width: 150\">\n</font>\n</td>\n</tr>\n";
 			echo $trow4;
-			echo "\n</table>\n</form>";
+			echo "\n</table>\n\n</form>\n";
 		
 		break;
 		}
@@ -1074,7 +1104,7 @@ class ur_adm {
 		// ========================================================
 		$cmpt = count($addon_list);
 		for ($v=0; $v<$cmpt+1; $v++) {
-//			if (addon_right($addon_list_id[$v] > 2) {
+//			if (addon_right($addon_list_id[$v] >\n 2) {
 				if (@file_exists("add-ons/".$addon_list[$v]."/locale/adm.".$language.".php")) {include("add-ons/".$addon_list[$v]."/locale/adm.".$language.".php");}
 				if (@file_exists("add-ons/".$addon_list[$v]."/adm/form.php")) {include("add-ons/".$addon_list[$v]."/adm/form.php");}
 //			}
@@ -1383,7 +1413,7 @@ class ur_adm {
 
 		if ($nref == 0) {
 			// Push the displayed panels, if a new panel was added
-			$res = $db->sql_query("SELECT panelid, posy FROM ".$db_prefix."_panels WHERE posx='$posx' AND posy>'$ref' ORDER BY posy");
+			$res = $db->sql_query("SELECT panelid, posy FROM ".$db_prefix."_panels WHERE posx='$posx' AND posy>\n'$ref' ORDER BY posy");
 			while(list($panelid, $posy) = $db->sql_fetchrow($res)) {
 				$npos = $posy + $op;
 				$db->sql_query("UPDATE ".$db_prefix."_panels SET posy='$npos' WHERE panelid='$panelid'");
@@ -1467,10 +1497,10 @@ function build_table_addons() {
 			list($addonid, $addon_name) = $db->sql_fetchrow($res);
 		}
 		if ($addon_name != "") {
-			echo "<tr><td bgcolor=\"".$bgc."\">".$addon_list[$v]."</td>"
-				."<td align=\"center\" bgcolor=\"".$bgc."\"></td>"
-				."<td align=\"center\" bgcolor=\"".$bgc."\"></td>"
-				."<td align=\"center\" bgcolor=\"".$bgc."\"><a href=\"index.php?cmd=admin&menu=addonrights&act=edit&id=".$addonid."\">".TXT_RIGHTS."</a></td></tr>";
+			echo "<tr>\n<td bgcolor=\"".$bgc."\">\n".$addon_list[$v]."</td>\n"
+				."<td align=\"center\" bgcolor=\"".$bgc."\">\n</td>\n"
+				."<td align=\"center\" bgcolor=\"".$bgc."\">\n</td>\n"
+				."<td align=\"center\" bgcolor=\"".$bgc."\">\n<a href=\"index.php?cmd=admin&menu=addonrights&act=edit&id=".$addonid."\">\n".TXT_RIGHTS."</a>\n</td>\n</tr>\n";
 			if ($bgc == $tab_bgcolor) {$bgc = dechex(hexdec($tab_bgcolor) - hexdec("111111"));} else {$bgc = $tab_bgcolor;}
 		}
 	}
@@ -1481,20 +1511,20 @@ function build_table_groups() {
 
 	$bgc = $tab_bgcolor;
 
-	echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\">MASTER</td><td bgcolor=\"".$tab_title_bgcolor2."\">".ADM_DESC_MASTER
-		."</td><td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\">".TXT_NATIVE
-		."</td><td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\">".TXT_NATIVE."</td></tr>";
-	echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\">ALL</td><td bgcolor=\"".$tab_title_bgcolor2."\">".ADM_DESC_GUEST
-		."</td><td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\">".TXT_NATIVE
-		."</td><td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\">".TXT_NATIVE."</td></tr>";	
+	echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\">\nMASTER</td>\n<td bgcolor=\"".$tab_title_bgcolor2."\">\n".ADM_DESC_MASTER
+		."</td>\n<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\">\n".TXT_NATIVE
+		."</td>\n<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\">\n".TXT_NATIVE."</td>\n</tr>\n";
+	echo "<tr>\n<td bgcolor=\"".$tab_title_bgcolor2."\">\nALL</td>\n<td bgcolor=\"".$tab_title_bgcolor2."\">\n".ADM_DESC_GUEST
+		."</td>\n<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\">\n".TXT_NATIVE
+		."</td>\n<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\">\n".TXT_NATIVE."</td>\n</tr>\n";	
 	// GET GROUPS LIST
 	$res = $db->sql_query("SELECT groupid, group_name, group_desc FROM ".$db_prefix."_".$acc_prefix."_groups");
 	while(list($groupid, $group_name, $group_desc) = $db->sql_fetchrow($res)) {
-		echo "<tr><td bgcolor=\"".$bgc."\"><a href=\"index.php?cmd=admin&menu=groups&act=edit&id=".$groupid."\">".$group_name."</a>"
-			."</td><td bgcolor=\"".$bgc."\">".$group_desc
-			."</td><td align=\"center\" bgcolor=\"".$bgc."\"><a href=\"index.php?cmd=admin&menu=grouprights&act=edit&id=".$groupid."\">".TXT_RIGHTS."</a>";
-		echo "</td><td align=\"center\" bgcolor=\"".$bgc."\"><a href=\"index.php?cmd=admin&menu=groups&act=delete&id=".$groupid."\">".TXT_DELETE."</a>"
-			."</td></tr>";
+		echo "<tr>\n<td bgcolor=\"".$bgc."\">\n<a href=\"index.php?cmd=admin&menu=groups&act=edit&id=".$groupid."\">\n".$group_name."</a>\n"
+			."</td>\n<td bgcolor=\"".$bgc."\">\n".$group_desc
+			."</td>\n<td align=\"center\" bgcolor=\"".$bgc."\">\n<a href=\"index.php?cmd=admin&menu=grouprights&act=edit&id=".$groupid."\">\n".TXT_RIGHTS."</a>\n";
+		echo "</td>\n<td align=\"center\" bgcolor=\"".$bgc."\">\n<a href=\"index.php?cmd=admin&menu=groups&act=delete&id=".$groupid."\">\n".TXT_DELETE."</a>\n"
+			."</td>\n</tr>\n";
 		if ($bgc == $tab_bgcolor) {$bgc = dechex(hexdec($tab_bgcolor) - hexdec("111111"));} else {$bgc = $tab_bgcolor;}
 	}
 }
@@ -1505,7 +1535,7 @@ function build_table_panels($column) {
 	$bgc = $tab_bgcolor;
 
 	// GET PANELS NUMBER
-	$rp = $db->sql_query("SELECT * FROM ".$db_prefix."_panels WHERE posx='$column' AND posy>'0'");
+	$rp = $db->sql_query("SELECT * FROM ".$db_prefix."_panels WHERE posx='$column' AND posy>\n'0'");
 	$max = $db->sql_numrows($rp);
 	// GET THE PANELS LIST
 	$rp = $db->sql_query("SELECT panelid, panel_addon, panel_title, panel_type, posy FROM ".$db_prefix."_panels WHERE posx='$column' ORDER BY posy");
@@ -1513,28 +1543,28 @@ function build_table_panels($column) {
 		if ($panel_type == 1) {	
 			$rp1 = $db->sql_query("SELECT addon_name FROM ".$db_prefix."_addons WHERE addonid='$panel_addon'");
 			if (list($addon_name) = $db->sql_fetchrow($rp1)) {
-				$ptype = "<a href=\"index.php?cmd=admin&menu=addonrights&act=edit&id=".$panel_addon."\">".$addon_name."</a>";
+				$ptype = "<a href=\"index.php?cmd=admin&menu=addonrights&act=edit&id=".$panel_addon."\">\n".$addon_name."</a>\n";
 			} else {
-				$ptype = "<font color=\"#FF0000\">[".TXT_ERROR."]</font>";
+				$ptype = "<font color=\"#FF0000\">\n[".TXT_ERROR."]</font>\n";
 			}
 		} else {
 			$ptype = "[".TXT_NO."]";
 		}
 		if ($posy == 0) {$bgc = $tab_title_bgcolor2;}
-		echo "<tr><td bgcolor=\"".$bgc."\"><a href=\"index.php?cmd=admin&menu=panels&act=edit&id=".$panelid."\"><b>".$panelid."</b></a></td>"
-			."<td bgcolor=\"".$bgc."\">".$panel_title."</td>"
-			."<td align=\"center\" bgcolor=\"".$bgc."\">".$ptype."</td>"		
-			."<td align=\"center\" bgcolor=\"".$bgc."\">".$posy."</td>"
-			."<td align=\"center\" bgcolor=\"".$bgc."\">";
-		if ($posy > 0) {
-			echo "<a href=\"index.php?cmd=admin&menu=panels&act=moveup&posx=$column&id=$panelid&ref=$posy\"><img border=\"0\" src=\"kernel/pics/up.gif\"></a>";
+		echo "<tr>\n<td bgcolor=\"".$bgc."\">\n<a href=\"index.php?cmd=admin&menu=panels&act=edit&id=".$panelid."\">\n<b>\n".$panelid."</b>\n</a>\n</td>\n"
+			."<td bgcolor=\"".$bgc."\">\n".$panel_title."</td>\n"
+			."<td align=\"center\" bgcolor=\"".$bgc."\">\n".$ptype."</td>\n"		
+			."<td align=\"center\" bgcolor=\"".$bgc."\">\n".$posy."</td>\n"
+			."<td align=\"center\" bgcolor=\"".$bgc."\">\n";
+		if ($posy >\n 0) {
+			echo "<a href=\"index.php?cmd=admin&menu=panels&act=moveup&posx=$column&id=$panelid&ref=$posy\">\n<img border=\"0\" src=\"kernel/pics/up.gif\">\n</a>\n";
 		}
 		if (($posy < $max) or ($max == 0)) {
-			echo "<a href=\"index.php?cmd=admin&menu=panels&act=movedown&posx=$column&id=$panelid&ref=$posy\"><img border=\"0\" src=\"kernel/pics/down.gif\"></a>";
+			echo "<a href=\"index.php?cmd=admin&menu=panels&act=movedown&posx=$column&id=$panelid&ref=$posy\">\n<img border=\"0\" src=\"kernel/pics/down.gif\">\n</a>\n";
 		}
-		echo "</td><td align=\"center\" bgcolor=\"".$bgc."\">"
-			."<a href=\"index.php?cmd=admin&menu=panels&act=delete&id=".$panelid."\">".TXT_DELETE."</a>"
-			."</td></tr>";
+		echo "</td>\n<td align=\"center\" bgcolor=\"".$bgc."\">\n"
+			."<a href=\"index.php?cmd=admin&menu=panels&act=delete&id=".$panelid."\">\n".TXT_DELETE."</a>\n"
+			."</td>\n</tr>\n";
 		if (($bgc == $tab_bgcolor) and ($posy != 0)) {$bgc = dechex(hexdec($tab_bgcolor) - hexdec("111111"));} else {$bgc = $tab_bgcolor;}			
 	}
 }
@@ -1547,11 +1577,11 @@ function build_table_users() {
 	// GET USERS LIST
 	$res = $db->sql_query("SELECT userid, user_name, user_lastlog FROM ".$db_prefix."_".$acc_prefix."_users");
 	while(list($userid, $user_name, $user_lastlog) = $db->sql_fetchrow($res)) {
-		echo "<tr><td bgcolor=\"".$bgc."\"><a href=\"index.php?cmd=admin&menu=users&act=edit&id=".$userid."\"><b>".$user_name."</b></a>"
-			."</td><td bgcolor=\"".$bgc."\">".$user_lastlog
-			."</td><td align=\"center\" bgcolor=\"".$bgc."\"><a href=\"index.php?cmd=admin&menu=usersgrp&act=edit&id=".$userid."\">".TXT_GROUPS."</a>";
-		echo "</td><td bgcolor=\"".$bgc."\"><a href=\"index.php?cmd=admin&menu=users&act=delete&id=".$userid."\">".TXT_DELETE."</a>"
-			."</td></tr>";
+		echo "<tr>\n<td bgcolor=\"".$bgc."\">\n<a href=\"index.php?cmd=admin&menu=users&act=edit&id=".$userid."\">\n<b>\n".$user_name."</b>\n</a>\n"
+			."</td>\n<td bgcolor=\"".$bgc."\">\n".$user_lastlog
+			."</td>\n<td align=\"center\" bgcolor=\"".$bgc."\">\n<a href=\"index.php?cmd=admin&menu=usersgrp&act=edit&id=".$userid."\">\n".TXT_GROUPS."</a>\n";
+		echo "</td>\n<td bgcolor=\"".$bgc."\">\n<a href=\"index.php?cmd=admin&menu=users&act=delete&id=".$userid."\">\n".TXT_DELETE."</a>\n"
+			."</td>\n</tr>\n";
 		if ($bgc == $tab_bgcolor) {$bgc = dechex(hexdec($tab_bgcolor) - hexdec("111111"));} else {$bgc = $tab_bgcolor;}
 	}
 }
@@ -1562,37 +1592,39 @@ function users_groups_list() {
 	
 	$bgc = $tab_bgcolor;
 	$cmpt = 0;
-	echo "<table width=\"100%\"><tr><td bgcolor=\"".$tab_title_bgcolor."\"><b>".ADM_USER_MEMBEROF."</b></td>"
-		."<td bgcolor=\"".$tab_title_bgcolor."\"></td><td bgcolor=\"".$tab_title_bgcolor."\"></td>"
-		."<td bgcolor=\"".$tab_title_bgcolor."\"></td></tr>";
+	echo "<table width=\"100%\">\n<tr>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n<b>\n".ADM_USER_MEMBEROF."</b>\n</td>\n"
+		."<td bgcolor=\"".$tab_title_bgcolor."\">\n</td>\n<td bgcolor=\"".$tab_title_bgcolor."\">\n</td>\n"
+		."<td bgcolor=\"".$tab_title_bgcolor."\">\n</td>\n</tr>\n";
 
-  echo "<tr><td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\"><b>ALL</b></td><td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\">".ADM_DESC_GUEST;
-  echo "</td><td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"16\"></td>";
-  echo "<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"></td></tr>";
+  echo "<tr>\n<td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\">\n<b>\nALL</b>\n</td>\n<td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\">\n".ADM_DESC_GUEST;
+  echo "</td>\n<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"16\">\n</td>\n";
+  echo "<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\">\n</td>\n</tr>\n";
   
 	if (user_is_member("master", $userid)) {
-    echo "<tr><td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\"><b>MASTER</b></td><td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\">".ADM_DESC_MASTER;
-    echo "</td><td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"16\"></td>";
-    echo "<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"></td></tr>";
+    echo "<tr>\n<td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\">\n<b>\nMASTER</b>\n</td>\n<td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\">\n".ADM_DESC_MASTER;
+    echo "</td>\n<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"16\">\n</td>\n";
+    echo "<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\">\n</td>\n</tr>\n";
   }
 	
   // GET GROUPS LIST
 	$res = $db->sql_query("SELECT groupid, group_name, group_desc FROM ".$db_prefix."_".$acc_prefix."_groups ORDER BY group_name LIMIT 64");
-	while(list($groupid, $group_name, $group_desc) = $db->sql_fetchrow($res)) {
+	while(list($groupid, $group_name, $group_desc) = $db->sql_fetchrow($res))
+  {
 		$cmpt++;
-		echo "<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
-			."<input type=\"hidden\" name=\"menu\" value=\"usergroups\"><input type=\"hidden\" name=\"act\" value=\"modify\">"
-			."<input type=\"hidden\" name=\"id\" value=\"".$userid."\"><input type=\"hidden\" name=\"grpid\" value=\"".$groupid."\">";
-		echo "<tr><td align=\"left\" bgcolor=\"".$bgc."\"><a href=\"index.php?cmd=admin&menu=groups&act=edit&id=".$groupid."\">".$group_name."</a>";
-		echo "</td><td align=\"left\" bgcolor=\"".$bgc."\">".$group_desc;
-		echo "</td><td align=\"center\" bgcolor=\"".$bgc."\" width=\"16\">";
+		formw();
+		echo "<input type=\"hidden\" name=\"cmd\" value=\"admin\">\n"
+			."<input type=\"hidden\" name=\"menu\" value=\"usergroups\">\n<input type=\"hidden\" name=\"act\" value=\"modify\">\n"
+			."<input type=\"hidden\" name=\"id\" value=\"".$userid."\">\n<input type=\"hidden\" name=\"grpid\" value=\"".$groupid."\">\n";
+		echo "<tr>\n<td align=\"left\" bgcolor=\"".$bgc."\">\n<a href=\"index.php?cmd=admin&menu=groups&act=edit&id=".$groupid."\">\n".$group_name."</a>\n";
+		echo "</td>\n<td align=\"left\" bgcolor=\"".$bgc."\">\n".$group_desc;
+		echo "</td>\n<td align=\"center\" bgcolor=\"".$bgc."\" width=\"16\">\n";
 		if (user_is_member($group_name, $userid)) {$ck = " checked";} else {$ck = "";}
-		echo "<input type=\"checkbox\" name=\"member\" value=\"chk\"".$ck."></td>";
-		echo "<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"submit\" value=\"".TXT_SAVE."\"></td></tr></form>";
+		echo "<input type=\"checkbox\" name=\"member\" value=\"chk\"".$ck.">\n</td>\n";
+		echo "<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\">\n<input type=\"submit\" value=\"".TXT_SAVE."\">\n</td>\n</tr>\n</form>\n";
 		if ($bgc == $tab_bgcolor) {$bgc = dechex(hexdec($tab_bgcolor) - hexdec("111111"));} else {$bgc = $tab_bgcolor;}		
 	}
-	if ($cmpt == 0) {echo "<tr><td colspan=\"4\">".ADM_GROUPS_NOGRP."</td></tr>";}
-  echo "</table>";
+	if ($cmpt == 0) {echo "<tr>\n<td colspan=\"4\">\n".ADM_GROUPS_NOGRP."</td>\n</tr>\n";}
+  echo "</table>\n";
 }
 
 function pannels_shift() {
@@ -1601,8 +1633,8 @@ function pannels_shift() {
 	// ========================================================
 	global $posy;
 
-	if ($posy > 0) {
-		$res = $db->sql_query("SELECT panelid, posy FROM ".$db_prefix."_panels WHERE posx='$posx' AND posy>'$posy' ORDER BY posy");
+	if ($posy >\n 0) {
+		$res = $db->sql_query("SELECT panelid, posy FROM ".$db_prefix."_panels WHERE posx='$posx' AND posy>\n'$posy' ORDER BY posy");
 		while(list($panelid, $posy) = $db->sql_fetchrow($res)) {
 			$npos = $posy - 1;
 			$db->sql_query("UPDATE ".$db_prefix."_panels SET posy='$npos' WHERE panelid='$panelid'");

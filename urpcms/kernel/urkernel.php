@@ -23,6 +23,84 @@ if (eregi("urkernel.php", $_SERVER['PHP_SELF'])) {Header("Location:../index.php"
 // * MISC FUNCTIONS                                                 *
 // ******************************************************************
 
+function formw()
+{
+	// ========================================================
+	// print header of form for WYSIWYG editor
+	// ========================================================
+	//
+  echo "\n<!--   **********  Début form  **********   -->\n";
+  echo "<form method=\"post\" action=\"index.php\" enctype=\"multipart/form-data\" onsubmit=\"return submitForm();\">\n";
+  echo "\n<!--   **********      Fin     **********   -->\n";
+}
+
+function wysiwyg($name, $value, $multi)
+{
+	// ========================================================
+	// Add WYSIWYG editor to Textarea
+	// ========================================================
+  // Variables :
+	// -----------
+	// - name	: name of field textarea
+	// - value : Value of textarea
+	// - multi : O if only one textarea or if is first, 1 for other
+	// ========================================================
+  if ($multi==0)
+  {
+    function RTESafe($strText)
+    {
+      //returns safe code for preloading in the RTE
+      $tmpString = trim($strText);
+
+      //convert all types of single quotes
+      $tmpString = str_replace(chr(145), chr(39), $tmpString);
+      $tmpString = str_replace(chr(146), chr(39), $tmpString);
+      $tmpString = str_replace("'", "&#39;", $tmpString);
+
+      //convert all types of double quotes
+      $tmpString = str_replace(chr(147), chr(34), $tmpString);
+      $tmpString = str_replace(chr(148), chr(34), $tmpString);
+      // $tmpString = str_replace("\"", "\"", $tmpString);
+
+      //replace carriage returns & line feeds
+      $tmpString = str_replace(chr(10), " ", $tmpString);
+      $tmpString = str_replace(chr(13), " ", $tmpString);
+
+      return $tmpString;
+    }
+  }
+  echo "\n<!--   **********  Début editeur wysiwyg  **********   -->\n";
+  $value = RTESafe($value);
+?>
+   <SCRIPT language="JavaScript" type="text/javascript">
+<!--
+<?
+  if ($multi==0)
+  {
+?>
+      function submitForm()
+      {
+        updateRTEs();
+     	  return true;
+      }
+<?
+  }
+?>
+      initRTE("kernel/pics/wysiwyg/", "kernel/", "");
+      writeRichText('<?=$name;?>','<?=$value;?>', 480, 200, true, false);
+-->
+    </SCRIPT>
+<?
+  echo "<br>";
+  echo "      <NOSCRIPT>\n";
+  echo "        <TEXTAREA cols=\"80\" rows=\"5\" name=\"".$name."\">\n";
+  echo $value."\n";
+  echo "        </TEXTAREA>\n";
+  echo "      </NOSCRIPT>\n";
+  echo "<!--   **********  Fin editeur wysiwyg  **********   -->\n";
+}
+
+
 function make_code($base=1000000, $nbr_digits=6) {
 	// ========================================================
 	// Generat a random code
@@ -447,6 +525,7 @@ class html_page {
 			."<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\n"
 			."<link rel=\"StyleSheet\" href=\"themes/texts/".$theme_style."/index.css\" TYPE=\"text/css\">\n"
 			."<title>".$site_title.$pagetitle."</title>\n"
+			."<script language=\"JavaScript\" type=\"text/javascript\" src=\"kernel/richtext.js\"></script>"
 			."</head>\n\n\n";
 		echo "<body bgcolor=\"#".$site_bgcolor_1."\" text=\"#".$site_txtcolor."\" topmargin=\"0\" leftmargin=\"0\">\n";
 		echo "<table border=\"".$site_border_size."\" cellpadding=\"0\" cellspacing=\"0\" align=\"center\" bordercolor=\"#".$site_border_color."\""
@@ -879,7 +958,9 @@ class html_page {
 		echo "<br><center>";
 		$this->title_chapter(TXT_IDENTIFICATION, 4);
 		if ($txt) {echo "<font class=\"title_dark\"><br>".TXT_LOG_TXTACCESS."</font>";}
-		echo "<br><form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"login\">"
+		echo "<br>";
+    formw();
+    echo "<input type=\"hidden\" name=\"cmd\" value=\"login\">"
 			."<input type=\"hidden\" name=\"back\" value=\"".$cmd_back."\"><input type=\"hidden\" name=\"act\" value=\"login\">"
 			."<table border=\"0\">"
 			."<tr><td>".TXT_LOG_YOURUSERNAME."</td><td><input type=\"text\" name=\"usr_name\" size=\"30\" maxlength=\"24\"></td></tr>"
@@ -911,7 +992,8 @@ class html_page {
 		echo "<br><center>";
 		$this->title_chapter(TXT_LOG_ADDMASTER, 4);
 		if ($txt) {echo "<center><font class=\"alert\"><br>".$txt."<br><br></font></center>";}
-		echo "<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"create_master\">\n"
+		formw();
+		echo "<input type=\"hidden\" name=\"cmd\" value=\"create_master\">\n"
 			."<input type=\"hidden\" name=\"sec\" value=\"".$code."\"><table border=\"0\">\n"
 			."<tr><td>".TXT_LOG_YOURUSERNAME."</td><td><input type=\"text\" name=\"account_name\" size=\"30\" maxlength=\"24\"></td></tr>"
 			."<tr><td>".TXT_LOG_YOURUSERPASS."</td><td><input type=\"password\" name=\"pass1\" maxlength=\"12\" size=\"15\"></td></tr>"
