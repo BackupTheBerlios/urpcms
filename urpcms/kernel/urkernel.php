@@ -14,12 +14,10 @@
 // | This file contain the whole of the principal functions, for a
 // | good working of UrPCMS.
 // |
-// | urkernel.php : V 0.0.3
+// | urkernel.php : V 0.0.4
 // ******************************************************************
 
 if (eregi("urkernel.php", $_SERVER['PHP_SELF'])) {Header("Location:../index.php");die();}
-
-
 
 // ******************************************************************
 // * MISC FUNCTIONS                                                 *
@@ -72,7 +70,7 @@ function user_is_member($group, $userid) {
 	$arr = explode(",", $user_groups);	
 	$cmpt = count($arr);
 	$ret = false;
-	for ($v=0; $v<$cmpt+1; $v++) {	
+	for ($v=0; $v<$cmpt; $v++) {	
 		if (strtolower($arr[$v]) == strtolower($group)) {return true;}
 	}
 	return $ret;
@@ -95,7 +93,7 @@ class ur_kernel {
 	function ur_kernel() {
 		$this->version = "0";
 		$this->revision = "0";
-		$this->build = "3";
+		$this->build = "4";
 	}
 }
 // ******************************************************************
@@ -114,9 +112,9 @@ class ur_user {
 	var $db_id;
 
 	function ur_user() {
-		global $HTTP_COOKIE_VARS, $page, $timezone;
+		global $page, $timezone;
 
-		$ccook = $HTTP_COOKIE_VARS["session_grp"];
+    $ccook = $_COOKIE["session_grp"];
 		$cook = explode(";", $ccook);
 		$this->name = $cook[0];
 		$this->groups = $cook[1];
@@ -130,10 +128,15 @@ class ur_user {
 		// User Login
 		// ========================================================
 		//
-		global $HTTP_COOKIE_VARS, $db, $db_prefix, $acc_prefix, $back, $usr_name, $usr_pass, $sec, $timezone, $secur_code;
+		global $db, $db_prefix, $acc_prefix, $back, $timezone, $secur_code;
 
-		if ($back == "") {$lk = "Location: index.php";} else {$lk = "Location: index.php?cmd=".$back;}
-		$ref = $HTTP_COOKIE_VARS["session_code"];
+    // GET THE POSTED VALUES
+    $usr_name = $_POST["usr_name"];
+    $usr_pass = $_POST["usr_pass"];
+    $sec = $_POST["sec"];		
+
+    if ($back == "") {$lk = "Location: index.php";} else {$lk = "Location: index.php?cmd=".$back;}
+		$ref = $_COOKIE["session_code"];
 		$cref = decrypt_data($ref);
 		$sec = md5($sec);
 
@@ -186,11 +189,18 @@ class ur_user {
 		// Creating an account
 		// ========================================================
 		//
-		global $HTTP_COOKIE_VARS, $db, $db_prefix, $acc_prefix, $timezone, $account_name, $pass1, $pass2, $sec;
+		global $db, $db_prefix, $acc_prefix, $timezone;
 
-		$ref = $HTTP_COOKIE_VARS["session_code"];
+    // GET THE POSTED VALUES
+    $account_name = $_POST["account_name"];
+    $pass1 = $_POST["pass1"];
+    $pass2 = $_POST["pass2"];
+    $sec = $_POST["sec"];
+    
+		$ref = $_COOKIE["session_code"];
 		$cref = decrypt_data($ref);
 		$sec = md5($sec);
+		
 		if ($sec == $cref) {
 			if ($account_name != "") {
 				if ($pass1 != "") {
@@ -287,7 +297,6 @@ class ur_user {
   		// Build user's groups list in array
   		$grp = explode(",", $this->groups);
   		$cnt_grp = count($grp);
-  		$cnt_addons = count($addon_list_name);
 
       // Build admin groups for the function [$adm_func]
       list($adm_list) = $db->sql_fetchrow($res);
@@ -387,7 +396,7 @@ class html_page {
 			$tab1 = "<table align=\"center\" border\"1\" width=\"200\"><tr><td align=\"center\">";
 			$tab2 = "</td><td align=\"center\">";
 			$tab3 = "</td></tr></table>";
-			$button1 = "<form action=\"".$post_lnk."\" method=\"post\"><input type=\"submit\" value=\"".$butt1."\" style=\"width: 120\"></form>";
+			$button1 = "<form action=\"".$post_lnk."\" method=\"post\"><input type=\"hidden\" name=\"confirm\" value=\"".true."\"><input type=\"submit\" value=\"".$butt1."\" style=\"width: 120\"></form>";
 			$button2 = "<form action=\"javascript:history.go(-1)\" method=\"post\"><input type=\"submit\" value=\"".$butt2."\" style=\"width: 120\"></form>";
 
 		} elseif ($flag == 2) {
@@ -414,9 +423,9 @@ class html_page {
 		// ========================================================
 		// - $pagetitle    : Title of the page (Will be diplayed in browser title bars)
 		// ========================================================
-		global $site_title, $site_author, $site_copyright, $site_bgcolor_1, $site_bgcolor_2, $site_border_size;
-		global $site_width, $site_border_color, $col_left_width, $panels_hspacing, $panels_vspacing, $header_banner, $header_bglogo, $theme_style;
-		global $urpcms_version, $contents_width, $bars_001, $bars_002, $bars_003;
+		global $site_title, $site_author, $site_copyright, $site_description, $site_keywords, $site_bgcolor_1, $site_bgcolor_2, $site_txtcolor;
+		global $site_border_size, $site_width, $site_border_color, $col_left_width, $panels_hspacing, $panels_vspacing, $header_banner, $header_bglogo;
+		global $theme_style, $urpcms_version, $contents_width, $bars_001, $bars_002, $bars_003;
 		global $page, $user, $db, $db_prefix;
 
 		if ($pagetitle != "") {$pagetitle = " - ".$pagetitle;}
@@ -437,9 +446,9 @@ class html_page {
 			."<meta name=\"ROBOTS\" content=\"INDEX, FOLLOW\">\n<meta name=\"REVISIT-AFTER\" content=\"1 DAYS\">\n"
 			."<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">\n"
 			."<link rel=\"StyleSheet\" href=\"themes/texts/".$theme_style."/index.css\" TYPE=\"text/css\">\n"
-			."<title>".$sitetitle.$pagetitle."</title>\n"
+			."<title>".$site_title.$pagetitle."</title>\n"
 			."</head>\n\n\n";
-		echo "<body bgcolor=\"#".$site_bgcolor_1."\" text=\"#".$th_txtcolor."\" topmargin=\"0\" leftmargin=\"0\">\n";
+		echo "<body bgcolor=\"#".$site_bgcolor_1."\" text=\"#".$site_txtcolor."\" topmargin=\"0\" leftmargin=\"0\">\n";
 		echo "<table border=\"".$site_border_size."\" cellpadding=\"0\" cellspacing=\"0\" align=\"center\" bordercolor=\"#".$site_border_color."\""
 			." bgcolor=\"#".$site_bgcolor_2."\" width=\"".$site_width."%\" style=\"border-collapse: collapse\" height=\"100%\">\n"
 			."<tr><td width=\"100%\" valign=\"top\">\n";
@@ -765,9 +774,12 @@ class html_page {
 			$llnk = "<table><tr><td><a href=\"index.php?cmd=logout\" class=\"lnk_light\">"
 				."<img src=\"kernel/pics/ic-16/plug2.gif\" alt=\"".TXT_DISCONNECT."\" border=\"0\" width=\"16\" height=\"16\"></a></td>"
 				."<td valign=\"center\"><a href=\"index.php?cmd=logout\" class=\"lnk_light\"><b>".TXT_DISCONNECT."</b></a></td></tr></table>";
-			$rlnk = "<table><td><a href=\"index.php?cmd=home\" class=\"lnk_light\">"
+			$rlnk = "<table><tr><td><a href=\"index.php?cmd=home\" class=\"lnk_light\">"
 				."<img src=\"kernel/pics/ic-16/user1.gif\" alt=\"".TXT_LOG_USER."\" border=\"0\" width=\"16\" height=\"16\"></a></td>"
 				."<td valign=\"center\"><a href=\"index.php?cmd=home\" class=\"lnk_light\"><b>".$user->name."</b></a></td>"
+				."<td valign=\"center\">&nbsp;|&nbsp;</td><td><a href=\"index.php?cmd=admin\" class=\"lnk_light\">"
+				."<img src=\"kernel/pics/ic-16/keys1.gif\" alt=\"".TXT_ADMINISTRATION."\" border=\"0\" width=\"16\" height=\"16\"></a></td>"
+				."<td valign=\"center\"><a href=\"index.php?cmd=admin\" class=\"lnk_light\"><b>".TXT_ADMINISTRATION."</b></a></td>"
 				."</td></tr></table>";
 		}
 		$page->bars_string($llnk, $rlnk, 22);

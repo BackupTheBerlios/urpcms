@@ -11,7 +11,7 @@
 // | modify it under the terms of the GNU General Public License as
 // | as published by the Free Software Foundation; version 2 of the License.
 // |
-// | index.php : V 0.0.4
+// | index.php : V 0.0.5
 // ==================================================================
 
 
@@ -48,12 +48,12 @@ $err_desc = "<b>Error :</b> Can't connect to the database... Check if the databa
 $db = new sql_db($db_url, $db_user, $db_password, $db_name);
 if(!$db) {die($err_desc);}
 $vrq = "site_title, site_author, site_copyright, site_description, site_keywords, site_logo, site_appearance, site_bgcolor_1, site_bgcolor_2, "
-	  ."site_border_size, site_width, language, col_left_width, col_right_width, contents_bgcolor, "
+	  ."site_txtcolor, site_border_size, site_width, language, col_left_width, col_right_width, contents_bgcolor, "
 	  ."contents_width, email_support, header_banner, header_bglogo, panels_bgcolor, panels_hspacing, panels_vspacing, "
 	  ."panels_title_bgcolor, secur_code, tab_bgcolor, tab_title_bgcolor, tab_title_bgcolor2, theme_edge, theme_style, "
 	  ."bars_001, bars_002, bars_003";
 $res = $db->sql_query("SELECT ".$vrq." FROM ".$db_prefix."_cfg LIMIT 1");
-list($site_title,$site_author,$site_copyright,$site_description,$site_keywords,$site_logo,$site_appearance,$site_bgcolor_1,$site_bgcolor_2,$site_border_size,$site_width, $language,$col_left_width,$col_right_width,$contents_bgcolor,$contents_width,$email_support,$header_banner, $header_bglogo,$panels_bgcolor,$panels_hspacing,$panels_vspacing,$panels_title_bgcolor,$secur_code,$tab_bgcolor,$tab_title_bgcolor,$tab_title_bgcolor2, $theme_edge,$theme_style,$bars_001,$bars_002,$bars_003) = $db->sql_fetchrow($res);
+list($site_title,$site_author,$site_copyright,$site_description,$site_keywords,$site_logo,$site_appearance,$site_bgcolor_1,$site_bgcolor_2,$site_txtcolor,$site_border_size,$site_width, $language,$col_left_width,$col_right_width,$contents_bgcolor,$contents_width,$email_support,$header_banner, $header_bglogo,$panels_bgcolor,$panels_hspacing,$panels_vspacing,$panels_title_bgcolor,$secur_code,$tab_bgcolor,$tab_title_bgcolor,$tab_title_bgcolor2, $theme_edge,$theme_style,$bars_001,$bars_002,$bars_003) = $db->sql_fetchrow($res);
 // Check and correct some values...
 if ($col_right_width < 0) {$col_right_width = 0;} elseif ($col_right_width > 300) {$col_right_width = 300;}
 if ($col_left_width < 0) {$col_left_width = 0;} elseif ($col_left_width > 300) {$col_left_width = 300;}
@@ -105,18 +105,6 @@ if (@file_exists("themes/texts/$theme_style/cfg.php")) {include("themes/texts/$t
 
 
 // ========================================================
-// Declar all Objects
-// ========================================================
-//
-$kernel = new ur_kernel();
-$user = new ur_user();
-$page = new html_page();
-$theme = new ur_theme();
-// ========================================================
-
-
-
-// ========================================================
 // TAKE THE ADDONS LIST FROM DATABASE
 // ========================================================
 // If the Add-On is not present in [add-ons] directory, it will be ignored.
@@ -138,12 +126,37 @@ while(list($addonid, $addon_name, $groups_view, $groups_use, $groups_admin) = $d
 // ========================================================
 
 
+// ========================================================
+// Change the error reporting level
+// ========================================================
+// To avoid a notice error message, the value should
+// be changed. It will be restored after all operartions.
+//
+$errr = error_reporting(0);
+error_reporting(E_ALL & ~(E_NOTICE));
+// ========================================================
+
+
+
+// ========================================================
+// Declar all Objects
+// ========================================================
+//
+$kernel = new ur_kernel();
+$user = new ur_user();
+$page = new html_page();
+$theme = new ur_theme();
+// ========================================================
+
+
 
 // ========================================================
 // First, we look the Master account presence
 // ========================================================
+// Only a post of $CMD is accepted to create a new MASTER
+// account.
 //
-if ($cmd != "create_master") {
+if ($_POST['cmd'] != "create_master") {
 	$res = $db->sql_query("SELECT user_name FROM ".$db_prefix."_".$acc_prefix."_users WHERE user_groups LIKE '%master%'");	
 	list($user_name) = $db->sql_fetchrow($res);
 	if (!$user_name) {
@@ -157,7 +170,39 @@ if ($cmd != "create_master") {
 		$page->html_foot();
 		die();
 	} 
+} else {
+	// ========================================================
+	// Master account creation
+	// ========================================================
+  $cmd = "___NOT_USED___";
+	$user->create_account("Master");
 }
+// ========================================================
+
+
+
+// ========================================================
+// Translate GET and POST values and restore the default error reporting
+// ========================================================
+//
+if (!$cmd) {
+  $cmd = $_POST['cmd'];
+  if (!$cmd) {$cmd = $_GET['cmd'];}
+}
+$menu = $_POST['menu'];
+if (!$menu) {$menu = $_GET['menu'];}
+$act = $_POST['act'];
+if (!$act) {$act = $_GET['act'];}
+$id = $_POST['id'];
+if (!$id) {$id = $_GET['id'];}
+$addon = $_POST['addon'];
+if (!$addon) {$addon = $_GET['addon'];}
+$movedown = $_POST['movedown'];
+if (!$movedown) {$movedown = $_GET['movedown'];}
+$moveup = $_POST['moveup'];
+if (!$moveup) {$moveup = $_GET['moveup'];}
+
+error_reporting($errr);
 // ========================================================
 
 
@@ -165,16 +210,16 @@ if ($cmd != "create_master") {
 // ========================================================
 // SWITCH OF [cmd] VARIABLE
 // ========================================================
-// 
+//
 switch ($cmd) {
 
 	// ========================================================
 	// Master account creation
 	// ========================================================
 	// 
-	case "create_master":
-	$user->create_account("Master");
-	break;
+//	case "create_master":
+//	$user->create_account("Master");
+//	break;
 
 	// ========================================================
 	// User Login
@@ -234,11 +279,11 @@ switch ($cmd) {
 				break;
 
 				case "movedown":
-				$adm->panels_move($obj, $posx, $ref, 1);
+				$adm->panels_move($id, 1);
 				break;
 
 				case "moveup":
-				$adm->panels_move($obj, $posx, $ref, -1);
+				$adm->panels_move($id, -1);
 				break;
 			}
 		} else {
@@ -269,9 +314,10 @@ switch ($cmd) {
 	default:
 	$page->html_header($site_title);
 	// Display the center panels
-	$res = $db->sql_query("SELECT panel_title, panel_text, posy FROM ".$db_prefix."_panels WHERE posx<'1' AND posy>'0' ORDER BY posy");
-	while(list($panel_title, $panel_text, $posy) = $db->sql_fetchrow($result)) {
-
+	$res = $db->sql_query("SELECT panel_title, panel_text, posy FROM ".$db_prefix."_panels WHERE posx<'1' AND posy>'0' AND panel_type='0' ORDER BY posy");
+	while(list($panel_title, $panel_text, $posy) = $db->sql_fetchrow($res)) {
+ 		$current_colunm = 0;
+    $page->build_panel(0, "", $panel_text, 0, 0, "");
 	}
 	$page->html_foot();
 	break;

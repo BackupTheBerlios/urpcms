@@ -11,7 +11,7 @@
 // | modify it under the terms of the GNU General Public License as
 // | as published by the Free Software Foundation; version 2 of the License.
 // |
-// | adm.php : V 0.0.4
+// | adm.php : V 0.0.5
 // ==================================================================
 
 if (eregi("adm.php", $_SERVER['PHP_SELF'])) {Header("Location: ../index.php");die();}
@@ -67,6 +67,7 @@ class ur_adm {
 		// ========================================================
 		// Build the administration menu
 		// ========================================================
+    $cmp = 0;
 		$page->html_table_start(true);
 
 		// Menu table
@@ -131,9 +132,8 @@ class ur_adm {
   		echo "</td>"; 		
     }  		
 		// ADD-ONS ICONS
-//		$cmp = 8;
 		$cmpt = count($addon_list_name);
-		for ($v=0; $v<$cmpt+1; $v++) {
+		for ($v=0; $v<$cmpt; $v++) {
 			$addon_name = $addon_list_name[$v];
 			$addon_right = $user->addon_right($addon_list_id[$v]);				
 			if ($addon_right > 2) {
@@ -189,14 +189,18 @@ class ur_adm {
 		// ========================================================
 		global $db, $db_prefix, $acc_prefix, $page, $addon;
 
+    $errmsg = "";
+    
 		if ($addon == "") {
 			// NO ADD-ON COMMAND
 			switch(strtolower($name)) {
 				// ========================================================
 				// Add a New Group
 				// ========================================================
-				case "groups";
-					global $grpname, $grpdesc;
+				case "groups";					
+          // GETS THE POSTED VALUES
+          $grpname = $_POST['grpname'];
+          $grpdesc = $_POST['grpdesc'];
 	
 					// Check For Bad Values...
 					if (trim($grpname) == '') {$errmsg = ADM_ERR_NOEMPTYNAME;}				
@@ -211,7 +215,12 @@ class ur_adm {
 				// Add a New Panel
 				// ========================================================
 				case "panels";
-					global $panaddon, $pantit, $pantxt, $pantype, $pantxt, $posw;
+          // GETS THE POSTED VALUES
+          $pantit = $_POST['pantit'];
+          $pantype = $_POST['pantype'];
+          $pantxt = $_POST['pantxt'];
+          $panaddon = $_POST['panaddon'];
+          $posw = $_POST['posw'];
 	
 					// Check For Bad Values...
 					if (($posw < 0) || ($posw > 2)) {$errmsg = ADM_PANELS_ERR_POSX;}
@@ -227,19 +236,25 @@ class ur_adm {
 				// Add a New User
 				// ========================================================
 				case "users";
-					global $HTTP_COOKIE_VARS, $timezone, $usrname, $pass1, $pass2, $usremail, $usrurl, $sec, $secur_pass_empty;
+					global $timezone;
 	
-					// Verify the session's code
-					$ref = $HTTP_COOKIE_VARS["session_code"];
+          // GETS THE POSTED VALUES
+          $usrname = $_POST['usrname'];
+          $pass1 = $_POST['pass1'];
+          $pass2 = $_POST['pass2'];
+          $usremail = $_POST['usremail'];
+          $usrurl = $_POST['usrurl'];
+          $sec = $_POST['sec'];
+					
+          // Verify the session's code
+					$ref = $_COOKIE["session_code"];
 					$cref = decrypt_data($ref);
 					$sec = md5($sec);
 					if ($sec != $cref) {$errmsg = ADM_USERS_ERR_DENIED;}
 					// Check For Bad Values...
 					if (trim($usrname) == '') {$errmsg = ADM_ERR_NOEMPTYNAME;}
 					if ($pass1 != $pass2) {$errmsg = ERR_ACC_PASSWASDIFF;}
-					if ($secur_pass_empty == 0) {
-						if ($pass1 == "") {$errmsg = ERR_ACC_NOEMPTYPASS;}
-					}
+					if ($pass1 == "") {$errmsg = ERR_ACC_NOEMPTYPASS;}
 					$pass = encrypt_data($pass1);
 					// Request Items
 					$table = $acc_prefix."_users";
@@ -265,7 +280,7 @@ class ur_adm {
 		// Add a New Values in Database
 		// ========================================================
 		if ($table) {
-			if (!$errmsg) {
+			if ($errmsg == "") {
 				// ATTEMPT TO ADD THE NEW ENTRY						
 				$res = $db->sql_query("INSERT INTO ".$db_prefix."_".$table." (".$fields.") VALUES (".$values.")");
 				if (!$res) {
@@ -311,6 +326,11 @@ class ur_adm {
 		// ========================================================
 		global $db, $db_prefix, $acc_prefix, $page, $confirmed, $addon;
 		
+    // GETS THE POSTED VALUES
+    error_reporting(E_ALL & ~(E_NOTICE));
+    $confirm = $_POST['confirm'];
+    error_reporting($errr);
+		
 		if ($addon == "") {
 			// NO ADD-ON COMMAND		
 			switch(strtolower($name)) {
@@ -355,7 +375,7 @@ class ur_adm {
 		// ========================================================
 		// Delete the Values in Database
 		// ========================================================
-		if ($confirmed) {
+		if ($confirm) {
 			$res = $db->sql_query("DELETE FROM ".$db_prefix."_".$table." WHERE ".$where." LIMIT 1");
 			if (!$res) {
 				// Display Error Message...
@@ -372,7 +392,7 @@ class ur_adm {
 			// Display Comfirm Message
 			$page->html_header(ADM_TITLE_ADMIN);
 			$page->title_page(ADM_TITLE_ADMIN, 2);
-			$page->MsgBox(ADM_Q_REALYDEL, TXT_YES, TXT_NO, 1, "index.php?cmd=admin&addon=".$addon."&menu=".$name."&act=delete&id=".$id."&confirmed=true");
+			$page->MsgBox(ADM_Q_REALYDEL, TXT_YES, TXT_NO, 1, "index.php?cmd=admin&addon=".$addon."&menu=".$name."&act=delete&id=".$id);
 			$page->html_foot();
 			die();
 		}
@@ -410,7 +430,6 @@ class ur_adm {
 			case "addonrights":
 				global $addon_list;
 
-				$hide_form = true;
 				$res = $db->sql_query("SELECT addon_name, groups_admin, groups_use, groups_view FROM ".$db_prefix."_addons WHERE addonid='$id'");
 				if ($res) {
 					list($addon_name, $groups_admin, $groups_use, $groups_view) = $db->sql_fetchrow($res);
@@ -432,14 +451,14 @@ class ur_adm {
 					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_USE."</b></td>"
 					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"><b>".TXT_ADMIN."</b></td>"
 					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor."\"></td></tr>"
-					."<form action=\"index.php?\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
+					."<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
 					."<input type=\"hidden\" name=\"menu\" value=\"".$name."\"><input type=\"hidden\" name=\"act\" value=\"modify\">"
 					."<input type=\"hidden\" name=\"id\" value=\"".$id."\"><input type=\"hidden\" name=\"grp_name\" value=\"all\">"
 					."<tr><td bgcolor=\"".$tab_title_bgcolor2."\"><b>ALL</b></td>"
 					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"0\"".$ck_noth."></td>"
 					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"1\"".$ck_view."></td>"
 					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"2\"".$ck_use."></td>"
-					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"radio\" name=\"right\" value=\"3\"".$ck_admin."></td>"
+					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"></td>"
 					."<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"><input type=\"submit\" value=\"".TXT_SAVE."\"></td></tr></form>";
 					
 					// GET GROUPS LIST
@@ -469,6 +488,7 @@ class ur_adm {
 					
 					$html_form = $html_form."\n</table>\n";
 					$html_form = $html_form."</td></tr>";
+  				$hide_form = true;
 					$call_function = "";
 				} else {
 					$errmsg = ERR_DB_CANTLOAD;
@@ -490,7 +510,7 @@ class ur_adm {
           $ex[6] = $db->sql_numrows($db->sql_query("SELECT * FROM ".$db_prefix."_admins WHERE FIND_IN_SET('$group_name',adm_list)>0 AND adm_function='security'"));
           $ex[7] = $db->sql_numrows($db->sql_query("SELECT * FROM ".$db_prefix."_admins WHERE FIND_IN_SET('$group_name',adm_list)>0 AND adm_function='users'"));					
 					for($v=0;$v<8;$v++) {
-            if($ex[$v] > 0) {$xs[$v] = " checked";}
+            if($ex[$v] > 0) {$xs[$v] = " checked";} else {$xs[$v] = "";}
           }
           $main_title = ADM_TITLE_GROUPRIGHT." : ".$group_name;				
 					$html_form = "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_GROUPS_NAME."</font>"
@@ -500,7 +520,7 @@ class ur_adm {
           ."<br>".ADM_GROUPS_CAUTION2."</font></td></tr>"
 					."<tr><td align=\"center\" colspan=\"2\" bgcolor=\"".$tab_bgcolor."\">\n<table>";
 
-					$html_form = $html_form.$trow2."<form action=\"index.php?\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
+					$html_form = $html_form.$trow2."<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
 					."<input type=\"hidden\" name=\"menu\" value=\"".$name."\"><input type=\"hidden\" name=\"act\" value=\"modify\">"
 					."<input type=\"hidden\" name=\"grp_name\" value=\"".$group_name."\">"
 					."<tr><td bgcolor=\"".$tab_title_bgcolor."\">".TXT_MENUS."</td><td bgcolor=\"".$tab_title_bgcolor."\">".TXT_ADMINISTRATION."</td></tr>"
@@ -522,6 +542,7 @@ class ur_adm {
           ."<td align=\"center\" bgcolor=\"".$tab_bgcolor."\"><input type=\"checkbox\" name=\"ck_users\" value=\"1\"".$xs[7]."></td></tr>";					
 					
 					$html_form = $html_form."\n</table>\n</td></tr>";
+					$hide_form = false;					
 					$call_function = "";
 				} else {
 					$errmsg = ERR_DB_CANTLOAD;
@@ -539,7 +560,8 @@ class ur_adm {
 					."<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_GROUPS_DESC."</font></td>"
 					."<td bgcolor=\"".$tab_bgcolor."\">"
 					."<input type=\"text\" name=\"grpdesc\" size=\"36\" maxlength=\"128\" value=\"".$group_desc."\" style=\"width: 210\"></td></tr>";
-					$call_function = "";
+					$hide_form = false;
+          $call_function = "";
 				} else {
 					$errmsg = ERR_DB_CANTLOAD;
 				}
@@ -552,13 +574,13 @@ class ur_adm {
 				if ($res) {
 					list($panelid, $panel_addon, $panel_title, $panel_text, $panel_type, $posx) = $db->sql_fetchrow($res);
 
-					if ($posx == 0) {$p_0 = " selected";}
-					if ($posx == 1) {$p_1 = " selected";}
-					if ($posx == 2) {$p_2 = " selected";}
-					if ($panel_type > 0) {$op_0 = " checked";} else {$op_1 = " checked";}
+					if ($posx == 0) {$p_0 = " selected";} else {$p_0 = "";}
+					if ($posx == 1) {$p_1 = " selected";} else {$p_1 = "";}
+					if ($posx == 2) {$p_2 = " selected";} else {$p_2 = "";}
+					if ($panel_type > 0) {$op_0 = " checked"; $op_1 = "";} else {$op_1 = " checked"; $op_0 = "";}
 
 					$main_title = ADM_TITLE_EDITPANEL;
-					$html_form = "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_PANELS_TITLE."</font></td>"
+					$html_form = $trow2."<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_PANELS_TITLE."</font></td>"
 					."<td bgcolor=\"".$tab_bgcolor."\">"
 					."<input type=\"text\" name=\"pantit\" size=\"36\" maxlength=\"64\" value=\"".$panel_title."\" style=\"width: 210\"></td></tr><tr>"
 					."<tr><td valign=\"top\" bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_PANELS_BODY."</font></td>"
@@ -577,6 +599,7 @@ class ur_adm {
 					."<option value=\"0\"".$p_0.">(".TXT_CENTER.")</option><option value=\"1\"".$p_1.">".TXT_LEFT."</option>"
 					."<option value=\"2\"".$p_2.">".TXT_RIGHT."</option>"
 					."</select></td></tr>";
+					$hide_form = false;
 					$call_function = "";
 				} else {
 					$errmsg = ERR_DB_CANTLOAD;
@@ -601,8 +624,9 @@ class ur_adm {
 					."<input type=\"text\" name=\"usrurl\" size=\"36\" maxlength=\"255\" value=\"".$user_url."\" style=\"width: 210\"></td></tr>"
 					."<tr><td colspan=\"2\" bgcolor=\"".$tab_bgcolor."\">";
 				
-					$html_form = $html_form.$html_list."</td></tr>";
-					$call_function = "users_groups_list";				
+					$html_form = $html_form."</td></tr>";
+					$hide_form = false;
+          $call_function = "users_groups_list";				
 				} else {
 					$errmsg = ERR_DB_CANTLOAD;
 				}
@@ -649,7 +673,7 @@ class ur_adm {
 		$page->html_table_end();
 	}
 
-	function form($name, $arg="") {
+	function form($name) {
 		// ========================================================
 		// Display the Main Form
 		// ========================================================
@@ -657,8 +681,8 @@ class ur_adm {
 		// - $id       : Entry ID in database
 		// ========================================================
 		global $db, $db_prefix, $page, $addon_list, $timezone, $language;
-		global $site_logo, $site_bgcolor_1, $site_bgcolor_2, $site_width, $col_left_width, $col_right_width, $contents_bgcolor, $contents_width;
-		global $header_banner, $header_bglogo, $panels_bgcolor, $panels_title_bgcolor, $panels_hspacing, $panels_vspacing;
+		global $site_logo, $site_bgcolor_1, $site_bgcolor_2, $site_txtcolor, $site_width, $col_left_width, $col_right_width, $contents_bgcolor;
+		global $contents_width, $header_banner, $header_bglogo, $panels_bgcolor, $panels_title_bgcolor, $panels_hspacing, $panels_vspacing;
 		global  $theme_style, $theme_edge, $tab_title_bgcolor, $tab_title_bgcolor2, $tab_bgcolor, $bars_001, $bars_002, $bars_003;
 	
 		$trow2 = "<tr><td bgcolor=\"".$tab_bgcolor."\" colspan=\"2\">&nbsp;</td></tr>";
@@ -698,23 +722,23 @@ class ur_adm {
 		// ========================================================
 		case "aspect":
 			// First bars
-			if ($bars_001 == 0) {$bar1_0 = " selected";}
-			if ($bars_001 == 1) {$bar1_1 = " selected";}
-			if ($bars_001 == 2) {$bar1_2 = " selected";}
-			if ($bars_001 == 3) {$bar1_3 = " selected";}
-			if ($bars_001 > 3) {$bar1_4 = " selected";}
+			if ($bars_001 == 0) {$bar1_0 = " selected";} else {$bar1_0 = "";}
+			if ($bars_001 == 1) {$bar1_1 = " selected";} else {$bar1_1 = "";}
+			if ($bars_001 == 2) {$bar1_2 = " selected";} else {$bar1_2 = "";}
+			if ($bars_001 == 3) {$bar1_3 = " selected";} else {$bar1_3 = "";}
+			if ($bars_001 > 3) {$bar1_4 = " selected";} else {$bar1_4 = "";}
 			// Second bars
-			if ($bars_002 == 0) {$bar2_0 = " selected";}
-			if ($bars_002 == 1) {$bar2_1 = " selected";}
-			if ($bars_002 == 2) {$bar2_2 = " selected";}
-			if ($bars_002 == 3) {$bar2_3 = " selected";}
-			if ($bars_002 > 3) {$bar2_4 = " selected";}
+			if ($bars_002 == 0) {$bar2_0 = " selected";} else {$bar2_0 = "";}
+			if ($bars_002 == 1) {$bar2_1 = " selected";} else {$bar2_1 = "";}
+			if ($bars_002 == 2) {$bar2_2 = " selected";} else {$bar2_2 = "";}
+			if ($bars_002 == 3) {$bar2_3 = " selected";} else {$bar2_3 = "";}
+			if ($bars_002 > 3) {$bar2_4 = " selected";} else {$bar2_4 = "";}
 			// Third bars
-			if ($bars_003 == 0) {$bar3_0 = " selected";}
-			if ($bars_003 == 1) {$bar3_1 = " selected";}
-			if ($bars_003 == 2) {$bar3_2 = " selected";}
-			if ($bars_003 == 3) {$bar3_3 = " selected";}
-			if ($bars_003 > 3) {$bar3_4 = " selected";}
+			if ($bars_003 == 0) {$bar3_0 = " selected";} else {$bar3_0 = "";}
+			if ($bars_003 == 1) {$bar3_1 = " selected";} else {$bar3_1 = "";}
+			if ($bars_003 == 2) {$bar3_2 = " selected";} else {$bar3_2 = "";}
+			if ($bars_003 == 3) {$bar3_3 = " selected";} else {$bar3_3 = "";}
+			if ($bars_003 > 3) {$bar3_4 = " selected";} else {$bar3_4 = "";}
 
 			$page->title_content(ADM_TITLE_ASPECT, "kernel/pics/ic-48/config.gif");
 				
@@ -749,14 +773,17 @@ class ur_adm {
 
 			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"title_dark\">".TXT_HEADER."</font></td></tr>";
 			echo $trow2;
+/*
 			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_LOGO."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
 				."<input type=\"text\" name=\"logo\" size=\"36\" style=\"width: 180\" maxlength=\"255\" value=\"".$site_logo."\"></td></tr>";
 			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_BGLOGO."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
 				."<input type=\"text\" name=\"bglogo\" size=\"36\" style=\"width: 180\" maxlength=\"255\" value=\"".$header_bglogo."\"></td></tr>";
 			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_RIGHTBANNER."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
 				."<input type=\"text\" name=\"banner\" size=\"36\" style=\"width: 180\" maxlength=\"255\" value=\"".$header_banner."\"></td></tr>";
+
 			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_BANNHEIGHT."</font></td><td bgcolor=\"".$tab_bgcolor."\">"
 				."<input type=\"text\" name=\"hheight\" size=\"3\" maxlength=\"3\" value=\"".$head_height."\">&nbsp;".TXT_PIXELS."</td></tr>";
+*/				
 			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_ASPECT_BUP."</font></td>"
 				."<td bgcolor=\"".$tab_bgcolor."\"><select size=\"1\" name=\"bar1\" style=\"width: 180\">"
 				."<option value=\"0\"".$bar1_0.">(".TXT_NOTHING.")</option><option value=\"1\"".$bar1_1.">".TXT_BARS_SUPPORT."</option>"
@@ -813,7 +840,7 @@ class ur_adm {
 		case "colors":
 			$page->title_content(ADM_TITLE_COLORS, "kernel/pics/ic-48/config.gif");
 
-			echo "<br>\n<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
+			echo "<br><center>".ADM_COLORS_CAUTION1."</center><br>\n<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
 				."<input type=\"hidden\" name=\"menu\" value=\"colors\"><input type=\"hidden\" name=\"act\" value=\"modify\">\n";
 			echo "<table align=\"center\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">";
 			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"title_dark\">".TXT_GENERAL."</font></td></tr>";
@@ -821,6 +848,8 @@ class ur_adm {
 				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcolsite\" size=\"7\" maxlength=\"6\" value=\"".$site_bgcolor_1."\"></td></tr>";
 			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLSECOND."</font></td>"
 				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcolsupp\" size=\"7\" maxlength=\"6\" value=\"".$site_bgcolor_2."\"></td></tr>";
+			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".TXT_TEXT."</font></td>"
+				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"txtcolsite\" size=\"7\" maxlength=\"6\" value=\"".$site_txtcolor."\"></td></tr>";				
 			
 			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"title_dark\">".TXT_PANELS."</font></td></tr>";
 			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLTITLEPANEL."</font></td>"
@@ -837,11 +866,6 @@ class ur_adm {
 				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcoltab2\" size=\"7\" maxlength=\"6\" value=\"".$tab_title_bgcolor2."\"></td></tr>";
 			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLTABLE1."</font></td>"
 				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcoltab\" size=\"7\" maxlength=\"6\" value=\"".$tab_bgcolor."\"></td></tr>";
-/*
-			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"title_dark\">".ADM_COLORS_TITLE2."</font></td></tr>";
-			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_COLORS_BGCOLSITE."</font></td>"
-				."<td bgcolor=\"".$tab_bgcolor."\"><input type=\"text\" name=\"bgcolsite\" size=\"7\" maxlength=\"6\" value=\"".$site_bgcolor_1."\"></td></tr>";
-*/
 			echo "<tr><td bgcolor=\"".$tab_title_bgcolor2."\" colspan=\"2\"><font class=\"text_big_dark\">&nbsp;</font></td>";
 			echo $trow2;
 			echo "<tr><td align=\"center\" bgcolor=\"".$tab_bgcolor."\" colspan=\"2\"><font class=\"text_big_dark\">"
@@ -885,7 +909,8 @@ class ur_adm {
 		break;
 
 		case "index":
-			$page->title_page(ADM_TITLE_INDEX, 2);
+			$page->title_content(ADM_TITLE_INDEX, "kernel/pics/ic-48/config.gif");
+
 
 		break;
 
@@ -976,12 +1001,10 @@ class ur_adm {
 		// Build a Security Management Form
 		// ========================================================
 		case "security";
-			global $secur_code, $secur_pass_empty;
+			global $secur_code;
 
 			// Use Security Code
-			if ($secur_code == 0) {$s1_1 = " checked";} else {$s1_2 = " checked";}
-			// Empty Pass
-			if ($secur_pass_empty == 0) {$s2_1 = " checked";} else {$s2_2 = " checked";}
+			if ($secur_code == 0) {$s1_1 = " checked"; $s1_2 = "";} else {$s1_2 = " checked"; $s1_1 = "";}
 
 			$page->title_content(ADM_TITLE_SECURITY, "kernel/pics/ic-48/config.gif");
 			echo "<br>\n<form action=\"index.php\" method=\"post\"><input type=\"hidden\" name=\"cmd\" value=\"admin\">"
@@ -1026,10 +1049,10 @@ class ur_adm {
 				."<input type=\"text\" name=\"usrname\" size=\"36\" maxlength=\"24\" style=\"width: 210\"></td></tr>";
 			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_USERS_PASS."</font></td>"
 				."<td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"pass1\" size=\"16\" maxlength=\"12\"></td></tr>";
+				."<input type=\"password\" name=\"pass1\" size=\"16\" maxlength=\"12\"></td></tr>";
 			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".TXT_LOG_CONFIRMPASS."</font></td>"
 				."<td bgcolor=\"".$tab_bgcolor."\">"
-				."<input type=\"text\" name=\"pass2\" size=\"16\" maxlength=\"12\"></td></tr>";
+				."<input type=\"password\" name=\"pass2\" size=\"16\" maxlength=\"12\"></td></tr>";
 			echo "<tr><td bgcolor=\"".$tab_bgcolor."\"><font class=\"text_big_dark\">".ADM_USERS_EMAIL."</font></td>"
 				."<td bgcolor=\"".$tab_bgcolor."\">"
 				."<input type=\"text\" name=\"usremail\" size=\"36\" maxlength=\"128\" style=\"width: 210\"></td></tr>";
@@ -1077,28 +1100,35 @@ class ur_adm {
 		// ========================================================		
 		global $db, $db_prefix, $acc_prefix, $page;
 		
+		$errmsg = "";
+		
 		switch(strtolower($name)) {
 
 			case "addonrights":
-        global $id, $grp_name, $right;
+        global $id;
+        
+        // GETS THE POSTED VALUES
+        $grp_name = strtolower($_POST['grp_name']);
+        $right = $_POST['right'];
 
 				// Get current affected groups
 				$res = $db->sql_query("SELECT groups_admin, groups_use, groups_view FROM ".$db_prefix."_addons WHERE addonid='$id'");
 				list($groups_admin, $groups_use, $groups_view) = $db->sql_fetchrow($res);
 				// Renews the groups rights
-				$arr = explode(",", $groups_admin);
+				$arr = explode(",", strtolower($groups_admin));
 				$groups_admin = "";
 				for($v=0;$v<count($arr);$v++) {if($arr[$v]!=$grp_name) {$groups_admin = $groups_admin.",".$arr[$v];}}
-				$arr = explode(",", $groups_use);
+				$arr = explode(",", strtolower($groups_use));
 				$groups_use = "";				
 				for($v=0;$v<count($arr);$v++) {if($arr[$v]!=$grp_name) {$groups_use = $groups_use.",".$arr[$v];}}
-				$arr = explode(",", $groups_view);
+				$arr = explode(",", strtolower($groups_view));
 				$groups_view = "";				
 				for($v=0;$v<count($arr);$v++) {if($arr[$v]!=$grp_name) {$groups_view = $groups_view.",".$arr[$v];}}
 				// Update groups list
 				if ($right==3) {$groups_admin = $groups_admin.",".$grp_name;}
 				if ($right==2) {$groups_use = $groups_use.",".$grp_name;}
 				if ($right==1) {$groups_view = $groups_view.",".$grp_name;}				
+
 				// Request Items
 				$table = "addons";
 				$fields = "groups_admin='$groups_admin', groups_use='$groups_use', groups_view='$groups_view'";
@@ -1107,7 +1137,18 @@ class ur_adm {
 			break;
 			
 			case "grouprights":
-        global $id, $grp_name, $ck_addons, $ck_aspect, $ck_colors, $ck_groups, $ck_index, $ck_panels, $ck_security, $ck_users;
+        global $id;
+
+         // GETS THE POSTED VALUES
+        $grp_name = $_POST['grp_name'];
+        $ck_addons = $_POST['ck_addons'];
+        $ck_aspect = $_POST['ck_aspect'];
+        $ck_colors = $_POST['ck_colors'];
+        $ck_groups = $_POST['ck_groups'];
+        $ck_index = $_POST['ck_index'];
+        $ck_panels = $_POST['ck_panels'];
+        $ck_security = $_POST['ck_security'];
+        $ck_users = $_POST['ck_users'];
 
         $pref = "UPDATE ".$db_prefix."_admins SET ";
         $sfunc = "";
@@ -1138,12 +1179,25 @@ class ur_adm {
 
 			case "aspect":
 				global $nbr_barstype;
-				global $th_style, $swidth, $cwidth, $vspace, $bar1, $bar2, $bar3, $logo, $appearance, $th_blocks, $lsize, $rsize, $hcspace;
 
-				// Correct the bars type if upper...
-				if ($bars_001 < 0) {$bars_001 = 0;} elseif ($bars_001 > $nbr_barstype) {$bars_001 = $nbr_barstype;}
-				if ($bars_002 < 0) {$bars_002 = 0;} elseif ($bars_002 > $nbr_barstype) {$bars_002 = $nbr_barstype;}
-				if ($bars_003 < 0) {$bars_003 = 0;} elseif ($bars_003 > $nbr_barstype) {$bars_003 = $nbr_barstype;}
+        // GETS THE POSTED VALUES
+        $th_style = $_POST['th_style'];
+        $swidth = $_POST['swidth'];
+        $cwidth = $_POST['cwidth'];
+        $vspace = $_POST['vspace'];
+        $bar1 = $_POST['bar1'];
+        $bar2 = $_POST['bar2'];
+        $bar3 = $_POST['bar3'];
+        $logo = $_POST['logo'];
+        $th_blocks = $_POST['th_blocks'];
+        $lsize = $_POST['lsize'];
+        $rsize = $_POST['rsize'];
+        $hcspace = $_POST['hcspace'];
+				
+        // Correct the bars type if upper...
+				if ($bar1 < 0) {$bar1 = 0;} elseif ($bar1 > $nbr_barstype) {$bar1 = $nbr_barstype;}
+				if ($bar2 < 0) {$bar2 = 0;} elseif ($bar2 > $nbr_barstype) {$bar2 = $nbr_barstype;}
+				if ($bar3 < 0) {$bar3 = 0;} elseif ($bar3 > $nbr_barstype) {$bar3 = $nbr_barstype;}
 
 				// Check For Bad Values...
 				if (($lsize < 0) || ($lsize > 300)) {$errmsg = ADM_ASPECT_ERR_BWIDTH;}
@@ -1166,11 +1220,20 @@ class ur_adm {
 			break;
 
 			case "colors":
-				global $bgcolsite, $bgcolsupp, $bgcolcontents, $bgcoltittab, $bgcoltab, $bgcoltab2, $bgcoltitpanel, $bgcolpanel;
-
-				// Request Items
+        // GETS THE POSTED VALUES
+        $bgcolsite = $_POST['bgcolsite'];
+        $bgcolsupp = $_POST['bgcolsupp'];
+        $txtcolsite = $_POST['txtcolsite'];
+        $bgcolcontents = $_POST['bgcolcontents'];
+        $bgcoltittab = $_POST['bgcoltittab'];
+        $bgcoltab = $_POST['bgcoltab'];
+        $bgcoltab2 = $_POST['bgcoltab2'];
+        $bgcoltitpanel = $_POST['bgcoltitpanel'];
+        $bgcolpanel = $_POST['bgcolpanel'];
+				
+        // Request Items
 				$table = "cfg";
-				$fields = "site_bgcolor_1='$bgcolsite', site_bgcolor_2='$bgcolsupp', contents_bgcolor='$bgcolcontents', "
+				$fields = "site_bgcolor_1='$bgcolsite', site_bgcolor_2='$bgcolsupp', site_txtcolor='$txtcolsite', contents_bgcolor='$bgcolcontents', "
 					."panels_title_bgcolor='$bgcoltitpanel', panels_bgcolor='$bgcolpanel', tab_title_bgcolor='$bgcoltittab', "
 					."tab_bgcolor='$bgcoltab', tab_title_bgcolor2='$bgcoltab2'";
 				$where = "";
@@ -1178,7 +1241,11 @@ class ur_adm {
 			break;
 
 			case "groups":
-				global $id, $grpname, $grpdesc;
+				global $id;
+				
+        // GETS THE POSTED VALUES
+        $grpname = $_POST['grpname'];
+        $grpdesc = $_POST['grpdesc'];
 
 				// Check For Bad Values...
 				if (trim($grpname) == "") {$errmsg = ADM_ERR_NOEMPTYNAME;}
@@ -1190,7 +1257,14 @@ class ur_adm {
 			break;
 
 			case "panels":
-				global $id, $panaddon, $pantit, $pantype, $pantxt, $posw;
+				global $id;
+				
+        // GETS THE POSTED VALUES
+        $pantit = $_POST['pantit'];
+        $pantype = $_POST['pantype'];
+        $pantxt = $_POST['pantxt'];
+        $panaddon = $_POST['panaddon'];
+        $posw = $_POST['posw'];        				
 
 				// Check For Bad Values...
 				if (($posw < 0) || ($posw > 2)) {$errmsg = ADM_PANELS_ERR_POSX;}
@@ -1203,7 +1277,8 @@ class ur_adm {
 			break;
 
 			case "security":
-				global $sec_code;
+        // GETS THE POSTED VALUES
+        $sec_code = $_POST['sec_code'];
 
 				// Request Items
 				$table = "cfg";
@@ -1212,8 +1287,23 @@ class ur_adm {
 				$return_lnk = "index.php?cmd=admin&menu=".$name;
 			break;
 
-			case "usergroups":
-				global $id, $grpid, $member;
+			case "users":
+				// Request Items
+				$table = "users";
+				$fields = "";
+				$where = "";
+				$return_lnk = "index.php?cmd=admin&menu=".$name;
+
+        $errmsg = "...CETTE FONCTION EST EN COURS DE DEVELOPPEMENT...";			
+			break;
+				
+			
+      case "usergroups":
+				global $id;
+
+        // GETS THE POSTED VALUES
+        $grpid = $_POST['grpid'];
+        $member = $_POST['member'];
 
 				// Get the groups list
 				$res = $db->sql_query("SELECT user_groups FROM ".$db_prefix."_".$acc_prefix."_users WHERE userid='$id' LIMIT 1");
@@ -1241,7 +1331,7 @@ class ur_adm {
 		// This Code Change the Values in Database
 		// ========================================================
 		if ($table) {
-			if (!$errmsg) {
+			if ($errmsg == "") {
 				// ATTEMPT TO ADD THE NEW ENTRY
 				if ($where != "") {$where = " WHERE ".$where;}
    			$res = $db->sql_query("UPDATE ".$db_prefix."_".$table." SET ".$fields.$where);
@@ -1266,19 +1356,23 @@ class ur_adm {
 		}
 		// ========================================================
 	}
-
-	function panels_move($obj, $posx, $ref, $op) {
+	
+  function panels_move($id, $op) {
 		// ========================================================
 		// Move a Panel
 		// ========================================================
-		// - $obj      : ID of panel in database
+		// - $id       : ID of panel in database
 		// - $posx     : 0=Center, 1=Left, 2=Right
 		// - $ref      : Strating position of panel to move
 		// - $op       : Opérator : 1 or -1
 		// ========================================================
 		global $db, $db_prefix;
 
-		// $OP Regularization.
+    // GETS THE POSTED VALUES
+    $posx = $_GET['posx'];
+    $ref = $_GET['ref'];
+		
+    // $OP Regularization.
 		if ($op < 0) {
 			$op = -1;
 			$nref = $ref - 1;
@@ -1305,7 +1399,7 @@ class ur_adm {
 
 		// Update the panel will be moved
 		$npos = $ref + $op;
-		$db->sql_query("UPDATE ".$db_prefix."_panels SET posy='$npos' WHERE panelid='$obj'");
+		$db->sql_query("UPDATE ".$db_prefix."_panels SET posy='$npos' WHERE panelid='$id'");
 
 		// Return to Panels Menu when done...
 		header("Location: index.php?cmd=admin&menu=panels");
@@ -1433,10 +1527,10 @@ function build_table_panels($column) {
 			."<td align=\"center\" bgcolor=\"".$bgc."\">".$posy."</td>"
 			."<td align=\"center\" bgcolor=\"".$bgc."\">";
 		if ($posy > 0) {
-			echo "<a href=\"index.php?cmd=admin&menu=panels&act=moveup&posx=$column&obj=$panelid&ref=$posy\"><img border=\"0\" src=\"kernel/pics/up.gif\"></a>";
+			echo "<a href=\"index.php?cmd=admin&menu=panels&act=moveup&posx=$column&id=$panelid&ref=$posy\"><img border=\"0\" src=\"kernel/pics/up.gif\"></a>";
 		}
 		if (($posy < $max) or ($max == 0)) {
-			echo "<a href=\"index.php?cmd=admin&menu=panels&act=movedown&posx=$column&obj=$panelid&ref=$posy\"><img border=\"0\" src=\"kernel/pics/down.gif\"></a>";
+			echo "<a href=\"index.php?cmd=admin&menu=panels&act=movedown&posx=$column&id=$panelid&ref=$posy\"><img border=\"0\" src=\"kernel/pics/down.gif\"></a>";
 		}
 		echo "</td><td align=\"center\" bgcolor=\"".$bgc."\">"
 			."<a href=\"index.php?cmd=admin&menu=panels&act=delete&id=".$panelid."\">".TXT_DELETE."</a>"
@@ -1467,11 +1561,22 @@ function users_groups_list() {
 	global $db, $db_prefix, $acc_prefix, $tab_bgcolor, $tab_title_bgcolor2, $tab_title_bgcolor, $userid;
 	
 	$bgc = $tab_bgcolor;
+	$cmpt = 0;
 	echo "<table width=\"100%\"><tr><td bgcolor=\"".$tab_title_bgcolor."\"><b>".ADM_USER_MEMBEROF."</b></td>"
 		."<td bgcolor=\"".$tab_title_bgcolor."\"></td><td bgcolor=\"".$tab_title_bgcolor."\"></td>"
 		."<td bgcolor=\"".$tab_title_bgcolor."\"></td></tr>";
 
-	// GET GROUPS LIST
+  echo "<tr><td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\"><b>ALL</b></td><td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\">".ADM_DESC_GUEST;
+  echo "</td><td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"16\"></td>";
+  echo "<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"></td></tr>";
+  
+	if (user_is_member("master", $userid)) {
+    echo "<tr><td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\"><b>MASTER</b></td><td align=\"left\" bgcolor=\"".$tab_title_bgcolor2."\">".ADM_DESC_MASTER;
+    echo "</td><td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"16\"></td>";
+    echo "<td align=\"center\" bgcolor=\"".$tab_title_bgcolor2."\" width=\"60\"></td></tr>";
+  }
+	
+  // GET GROUPS LIST
 	$res = $db->sql_query("SELECT groupid, group_name, group_desc FROM ".$db_prefix."_".$acc_prefix."_groups ORDER BY group_name LIMIT 64");
 	while(list($groupid, $group_name, $group_desc) = $db->sql_fetchrow($res)) {
 		$cmpt++;
@@ -1486,7 +1591,8 @@ function users_groups_list() {
 		echo "<td align=\"center\" bgcolor=\"".$bgc."\" width=\"60\"><input type=\"submit\" value=\"".TXT_SAVE."\"></td></tr></form>";
 		if ($bgc == $tab_bgcolor) {$bgc = dechex(hexdec($tab_bgcolor) - hexdec("111111"));} else {$bgc = $tab_bgcolor;}		
 	}
-	echo "</table>";
+	if ($cmpt == 0) {echo "<tr><td colspan=\"4\">".ADM_GROUPS_NOGRP."</td></tr>";}
+  echo "</table>";
 }
 
 function pannels_shift() {

@@ -11,7 +11,7 @@
 // | modify it under the terms of the GNU General Public License as
 // | as published by the Free Software Foundation; version 2 of the License.
 // |
-// | adm.[$langue].php : V 0.0.2
+// | adm.[$langue].php : V 0.0.3
 // ==================================================================
 
 define("ADM_TITLE_ADMIN","Administration du Site");
@@ -72,10 +72,12 @@ define("ADM_COLORS_BGCOLCONTENTS","Fond du Contenu");
 define("ADM_COLORS_BGCOLTABLE1","Fond des Tableaux");
 define("ADM_COLORS_BGCOLTITLETABLE","Fond des Titres Principaux des Tableaux");
 define("ADM_COLORS_BGCOLTITLETABLE2","Fond des Titres Secondaires des Tableaux");
+define("ADM_COLORS_CAUTION1","La couleur du texte, ne s'applique qu'aux paragraphes qui n'utilisent pas de style.");
 // GROUPS
 define("ADM_GROUPS_NAME","Nom du Groupe");
 define("ADM_GROUPS_MEMBERS","Liste des Membres");
 define("ADM_GROUPS_DESC","Description du Groupe");
+define("ADM_GROUPS_NOGRP","Aucun groupe n'existe...");
 define("ADM_GROUPS_ERR_UPDTRIGHT","Au moins un des menus, n'a pas été mis à jour au niveau des droits.");
 define("ADM_GROUPS_CAUTION1","Attention : Si vous donnez des droits d'administration à ce groupe, tous ses membres auront accès aux menus permettant de configurer le site pour tous les utilisateurs.");
 define("ADM_GROUPS_CAUTION2","N'hésitez pas à créer un groupe spécifique pour accorder de tels privilèges. La modification de certains paramètres pourrait entraîner de graves problèmes.");

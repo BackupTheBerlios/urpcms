@@ -11,7 +11,7 @@
 // | modify it under the terms of the GNU General Public License as
 // | as published by the Free Software Foundation; version 2 of the License.
 // |
-// | V 0.0.1     	: The first Alpha release.
+// | add-ons/[$addon_name]/add.php : V 0.0.2
 // ==================================================================
 // | This file is included at each [add] call. ADD is an [adm] function.
 // ==================================================================
@@ -27,7 +27,8 @@ switch(strtolower($name)) {
 	// Add a New Tutorial
 	// ========================================================
 	case "tutorial";
-		global $tuttitle;
+    // GETS THE POSTED VALUES
+    $tuttitle = $_POST['tuttitle'];
 
 		// Check For Bad Values...
 		if (trim($tuttitle) == '') {$errmsg = ADM_ERR_NOEMPTYNAME;}			

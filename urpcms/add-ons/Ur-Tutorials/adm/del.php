@@ -11,7 +11,7 @@
 // | modify it under the terms of the GNU General Public License as
 // | as published by the Free Software Foundation; version 2 of the License.
 // |
-// | V 0.0.1     	: The first Alpha release.
+// | add-ons/[$addon_name]/del.php : V 0.0.2
 // ==================================================================
 // | This file is included at each [del] call. DEL is an [$adm] function.
 // ==================================================================

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: mysql.php,v 1.1 2004/03/03 17:21:14 jacxof Exp $
+ *   $Id: mysql.php,v 1.2 2004/03/03 17:29:11 jacxof Exp $
  *
  ***************************************************************************/
 
@@ -23,7 +23,7 @@ if(!defined("SQL_LAYER"))
 {
 
 define("SQL_LAYER","mysql");
-$debug = 0;
+//$debug = 1;
 
 class sql_db
 {
@@ -39,7 +39,7 @@ class sql_db
 	//
 	function sql_db($sqlserver, $sqluser, $sqlpassword, $database)
 	{
-		$this->persistency = $persistency;
+//		$this->persistency = $persistency;
 		$this->user = $sqluser;
 		$this->password = $sqlpassword;
 		$this->server = $sqlserver;
@@ -91,9 +91,10 @@ class sql_db
 	//
 	function sql_query($query = "", $transaction = FALSE)
 	{
+    global $debug;
 		// Remove any pre-existing queries
 		unset($this->query_result);
-                if ($debug ==1 ) { echo "".$query."<BR>"; }
+//                if ($debug ==1 ) { echo "".$query."<BR>"; }
 		if($query != "")
                 {
             ////webotheque hack filtre
@@ -111,7 +112,7 @@ class sql_db
 		}
 		else
 		{
-			return ( $transaction == END_TRANSACTION ) ? true : false;
+			//return ( $transaction == END_TRANSACTION ) ? true : false;
 		}
 	}
 

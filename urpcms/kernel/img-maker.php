@@ -11,28 +11,11 @@
 // | modify it under the terms of the GNU General Public License as
 // | as published by the Free Software Foundation; version 2 of the License.
 // |
-// | V 0.0.1     : The first Alpha version.
+// | img_maker.php : V 0.0.2
 // ==================================================================
 
-function mk_txtjpg($txt) {
-	header("Content-type: image/jpeg");  
-	$im = imagecreatefromjpeg("pics/back-code.jpg");
-	$txt_color = imagecolorallocate($im, 123, 156, 189);  
-	imagestring($im, 5, 26, 2,  $txt, 0);
-	imagejpeg($im);
-	imagedestroy($im);
-	die();
-}
-
-function mk_txtpng($txt) {
-	header("Content-type: image/png");  
-	$im = imagecreatefrompng("pics/back-code.png");
-	$txt_color = imagecolorallocate($im, 123, 156, 189);  
-	imagestring($im, 5, 26, 2,  $txt, 0);
-	imagepng($im);
-	imagedestroy($im);
-	die();
-}
+$op = $_GET["op"];
+$txt = $_GET["txt"];
 
 switch ($op) {
 
@@ -43,6 +26,26 @@ switch ($op) {
 	case "pngcode";
 	mk_txtpng($txt);
 	break;
+}
+
+function mk_txtjpg($txt) {
+	header("Content-type: image/jpeg");
+	$im = imagecreatefromjpeg("pics/back-code.jpg");
+	$txt_color = imagecolorallocate($im, 123, 156, 189);
+	imagestring($im, 5, 26, 2,  $txt, $txt_color);
+	imagejpeg($im);
+	imagedestroy($im);
+	die();
+}
+
+function mk_txtpng($txt) {
+	header("Content-type: image/png");
+	$im = imagecreatefrompng("pics/back-code.png");
+	$txt_color = imagecolorallocate($im, 123, 156, 189);
+	imagestring($im, 5, 26, 2,  $txt, $txt_color);
+	imagepng($im);
+	imagedestroy($im);
+	die();
 }
 
 ?>

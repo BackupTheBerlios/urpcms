@@ -82,6 +82,7 @@ define("TXT_RIGHTS","Droits");
 define("TXT_SAVE","Sauver");
 define("TXT_SECURITY","Sécurité");
 define("TXT_SUPPORT","Support");
+define("TXT_TEXT","Texte");
 define("TXT_TITLE","Titre");
 define("TXT_USE","Utiliser");
 define("TXT_USERS","Utilisateurs");
